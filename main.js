@@ -74,13 +74,6 @@ window.onload = function() {
 
         initSeaBackground(game.rootScene);
 
-        //var background = new getSeaBackground();
-        //var background2 = new getSeaBackground();
-        //game.rootScene.addChild(background);
-        //game.rootScene.addChild(background2);
-
-
-
         /**
          * Sprite.image {Object}
          * Core#preload で指定されたファイルは、Core.assets のプロパティとして格納される。
@@ -113,12 +106,8 @@ window.onload = function() {
          * この rootScene に描画したいオブジェクトを子として追加する (addChild) ことで、毎フレーム描画されるようになる。
          * 引数には enchant.Node を継承したクラス (Entity, Group, Scene, Label, Sprite..) を指定する。
          */
-        //game.rootScene.addChild(background);
-        game.rootScene.addChild(bear);
 
-        //bear2 = new Sprite(32, 32);
-        //bear2.image = game.assets["chara1.png"];
-        //game.rootScene.addChild(bear2);
+        game.rootScene.addChild(bear);
 
         /**
          * EventTarget#addEventListener(event, listener)
@@ -175,7 +164,3 @@ window.onload = function() {
     game.start();
     window.scrollTo(0, 0);
 };
-
-function toSky() {
-
-}
