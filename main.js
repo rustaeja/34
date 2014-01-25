@@ -10,6 +10,7 @@
  */
 enchant();
 
+
 /*
  * window.onload
  *
@@ -20,7 +21,8 @@ enchant();
  * すべての処理はページがロードされてから行うため、 window.onload の中で実行する。
  * 特に new Core(); は、<body> タグが存在しないとエラーになるので注意。
  */
-window.onload = function(){
+window.onload = function() {
+
     /**
      * new Core(width, height)
      *
@@ -28,7 +30,7 @@ window.onload = function(){
      * Core オブジェクトを作成する。
      * 画面の大きさは 320ピクセル x 320ピクセル に設定する。
      */
-    var game = new Core(320, 320);
+    var game = new Core(800, 600);
 
     /**
      * Core.fps
@@ -44,7 +46,7 @@ window.onload = function(){
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      * 必要なファイルを相対パスで引数に指定する。 ファイルはすべて、ゲームが始まる前にロードされる。
      */
-    game.preload("chara1.png");
+    game.preload("chara1.png", "assets/background/sea.jpg", "assets/background/sky.jpg");
 
     /**
      * Core#onload
@@ -61,12 +63,21 @@ window.onload = function(){
      * })
      */
     game.onload = function(){
+
+        var direction = 4;
         /**
          * new Sprite(width, height)
          * スプライトオブジェクトを作成する。
          * Sprite は、Entity, Node, EventTarget を継承しており、それぞれのメソッドやプロパティを使うことができる。
          */
         bear = new Sprite(32, 32);
+
+        var background = new getSeaBackground();
+        var background2 = new getSeaBackground();
+        game.rootScene.addChild(background);
+        game.rootScene.addChild(background2);
+
+
 
         /**
          * Sprite.image {Object}
@@ -100,7 +111,12 @@ window.onload = function(){
          * この rootScene に描画したいオブジェクトを子として追加する (addChild) ことで、毎フレーム描画されるようになる。
          * 引数には enchant.Node を継承したクラス (Entity, Group, Scene, Label, Sprite..) を指定する。
          */
+        //game.rootScene.addChild(background);
         game.rootScene.addChild(bear);
+
+        //bear2 = new Sprite(32, 32);
+        //bear2.image = game.assets["chara1.png"];
+        //game.rootScene.addChild(bear2);
 
         /**
          * EventTarget#addEventListener(event, listener)
@@ -123,7 +139,7 @@ window.onload = function(){
              * クマを走らせるために、x座標をインクリメントしている。
              * この無名関数 function(){ ... } は enterframe イベントのリスナなので、毎フレーム実行される。
              */
-            this.x += 1;
+            this.x += direction;
 
             /**
              * this.age (Node.age) は、クマのオブジェクトが今までに何回描画されたか
@@ -142,7 +158,8 @@ window.onload = function(){
              * クマを game.rootScene から削除する。
              * Group#addChild の逆は Group#removeChild。
              */
-            game.rootScene.removeChild(bear);
+            direction *= -1;
+            bear.scaleX *= -1;
         });
     };
 
@@ -153,4 +170,9 @@ window.onload = function(){
      * Core#pause(); で一時停止し、 Core#resume(); で再開することができる。
      */
     game.start();
+    window.scrollTo(0, 0);
 };
+
+function toSky() {
+
+}
