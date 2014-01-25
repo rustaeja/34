@@ -44,12 +44,14 @@ window.onload = function() {
      *     // code
      * })
      */
-    game.onload = function(){
+    game.onload = function() {
+        var rootScene = game.rootScene,
+            player = new Player();
 
-        initSeaBackground(game.rootScene);
-        var player = new Player();
+        var backGround = new Background("res/sea.jpg");
+        rootScene.addChild(backGround);
 
-        game.rootScene.addChild(player);
+        rootScene.addChild(player);
     };
 
     /**

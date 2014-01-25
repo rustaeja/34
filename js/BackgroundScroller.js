@@ -55,6 +55,20 @@ var SkyBackground = enchant.Class.create(enchant.Sprite, {
 		// remove it from the scene
 		if (this.y >= 600)
 			enchant.Game.instance.rootScene.removeChild(this);
+	},
+
+	toTheSky:function() {
+		isTransitioning = true;
+		currentState = states.SKY;
+		var background1 = new SkyBackground();
+		background1.y = -600;
+		var background2 = new SkyBackground();
+		background2.y = -600;
+		background2.x = 800;
+		background2.scaleX = -1;
+		var scene = enchant.Game.instance.rootScene;
+		scene.addChild(background1);
+		scene.addChild(background2);
 	}
 });
 
@@ -67,20 +81,4 @@ function initSeaBackground(rootScene) {
 	background2.scaleX = -1;
 	rootScene.addChild(background2);
 	
-}
-
-// Transition to the sky, initializing sky backgrounds
-// and moving from sea into the sky
-function toTheSky() {
-	isTransitioning = true;
-	currentState = states.SKY;
-	var background1 = new SkyBackground();
-	background1.y = -600;
-	var background2 = new SkyBackground();
-	background2.y = -600;
-	background2.x = 800;
-	background2.scaleX = -1;
-	var scene = enchant.Game.instance.rootScene;
-	scene.addChild(background1);
-	scene.addChild(background2);
 }
