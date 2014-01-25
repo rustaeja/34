@@ -17,7 +17,11 @@ window.onload = function() {
     /**
      * new Core(width, height)
      */
-    var game = new Core(800, 600);
+
+    var screenWidth = 800;
+    var screenHeight = 600; 
+    
+    var game = new Core(screenWidth, screenHeight);
 
     /**
      * Core.fps
@@ -46,7 +50,7 @@ window.onload = function() {
      */
 
     game.Score = 0;
-    
+
     game.onload = function() {
         var rootScene = game.rootScene,
             backGround = new Background("res/sea.jpg"),
@@ -55,17 +59,28 @@ window.onload = function() {
         rootScene.addChild(backGround);
         rootScene.addChild(player);
 
+        //add score label. Move all this out later. 
         var scoreLabel = new Label("Score: ");
         
         scoreLabel.addEventListener('enterframe', function() {
             this.text = "Score: " + game.Score;
         });
 
-        scoreLabel.x = 800 / 2;
+        scoreLabel.x = screenWidth / 2;
         scoreLabel.y = 5;
         scoreLabel.color = "white";
 
         game.rootScene.addChild(scoreLabel);
+
+        var levelLabel = new Label("Level: ");
+        levelLabel.addEventListener('enterframe', function() {
+            this.text = "Level: " + game.Level;
+        });
+
+        levelLabel.x = 10;
+        levelLabel.y = 5;
+        levelLabel.color = "white";
+        game.rootScene.addChild(levelLabel);
 
     };
 
