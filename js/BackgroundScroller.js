@@ -30,8 +30,6 @@ var SeaBackground = enchant.Class.create(enchant.Sprite, {
 		if (this.y >= 600) 
 			enchant.Game.instance.rootScene.removeChild(this);
 	}
-
-
 });
 
 var SkyBackground = enchant.Class.create(enchant.Sprite, {
