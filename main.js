@@ -31,7 +31,12 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("res/fish_stage/player/GreenFish.png", "res/sea.jpg", "res/sky.jpg");
+    game.preload(fishie_player_small, 
+				 fishie_enemy_medium_fish, 
+				 fishie_enemy_seal,
+				 fishie_enemy_small,
+				 "res/sea.jpg", 
+				 "res/sky.jpg");
 
     /**
      * Core#onload
@@ -48,7 +53,9 @@ window.onload = function() {
 
         initSeaBackground(game.rootScene);
         var player = new Player();
-
+		EnemyGenerator.init(fishie_enemies);
+		EnemyGenerator.genEnemy();
+		//var e = new Enemy("res/fish_stage/player/GreenFish.png");
         game.rootScene.addChild(player);
     };
 

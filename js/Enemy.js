@@ -1,15 +1,10 @@
-var states;
-
 var Enemy = enchant.Class.create(enchant.Sprite, {
 
-	var targetX;
-
-	initialize:function() {
+	initialize:function(name) {
 		var game = enchant.Game.instance;
 		Sprite.call(this, 39, 39);
-		this.image = game.assets["assets/enemy/enemyFish.png"];
-		this.randomizeSize();
-
+		this.image = game.assets[name];
+		//this.randomizeSize();
 	},
 
 	randomizeSize:function(){
@@ -20,8 +15,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 	},
 
 	onenterframe:function() {
-		this.x += dx;
-		this.y += dy;
+		this.x += 5;
+		this.y += 5;
 	},
 
 	randomizePosition:function() {
@@ -31,13 +26,10 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		if (randomNumber == 0) {
 			// Enemy spawn from left
 			this.x = -50;
-			targetX = 
 		} else {
 			// Enemy spawn from right
 			this.x = 650;
-
 		}
-
 	}
 
 });
