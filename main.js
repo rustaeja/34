@@ -72,10 +72,12 @@ window.onload = function() {
          */
         bear = new Sprite(32, 32);
 
-        var background = new getSeaBackground();
-        var background2 = new getSeaBackground();
-        game.rootScene.addChild(background);
-        game.rootScene.addChild(background2);
+        initSeaBackground(game.rootScene);
+
+        //var background = new getSeaBackground();
+        //var background2 = new getSeaBackground();
+        //game.rootScene.addChild(background);
+        //game.rootScene.addChild(background2);
 
 
 
@@ -160,6 +162,7 @@ window.onload = function() {
              */
             direction *= -1;
             bear.scaleX *= -1;
+            toTheSky();
         });
     };
 

@@ -1,7 +1,12 @@
+var states = {
+	SEA: 0,
+	SKY: 1
+};
 
-var background1;
-var background2;
 var isTransitioning = false;
+var backgroundTransitionSpeed = 3;
+var backgroundScrollSpeed = 2;
+var currentState = states.SEA;
 
 var SeaBackground = enchant.Class.create(enchant.Sprite, {
 	initialize:function() {
@@ -12,17 +17,17 @@ var SeaBackground = enchant.Class.create(enchant.Sprite, {
 	},
 
 	onenterframe:function() {
-		this.x -= 2;
+		this.x -= backgroundScrollSpeed;
 		// If the background is completely at the left side of screen,
 		// move it to the right
 		if (this.x == -800) this.x = 800;
 
 		// If transitioning into the next stage, slowly sink the background
-		if (isTransitioning) this.y += 6;
+		if (currentState != states.SEA) this.y += backgroundTransitionSpeed;
 
 		// If the background is at bottom of the screen (invisible),
 		// remove it from the scene
-		if (this.y >= 600)
+		if (this.y >= 600) 
 			enchant.Game.instance.rootScene.removeChild(this);
 	}
 
@@ -35,23 +40,48 @@ var SkyBackground = enchant.Class.create(enchant.Sprite, {
 		var game = enchant.Game.instance;
 		Sprite.call(this, 800, 600);
 		this.image = game.assets["assets/background/sky.jpg"];
+	},
+
+	onenterframe:function() {
+		this.x -= backgroundScrollSpeed;
+		// If the background is completely at the left side of screen,
+		// move it to the right
+		if (this.x == -800) this.x = 800;
+
+		// If transitioning into the next stage, slowly sink the background
+		if (currentState == states.SKY && isTransitioning) {
+			this.y += backgroundTransitionSpeed;
+			if (this.y >= 0) isTransitioning = false;
+		}
+		// If the background is at bottom of the screen (invisible),
+		// remove it from the scene
+		if (this.y >= 600)
+			enchant.Game.instance.rootScene.removeChild(this);
 	}
 });
 
-function getSeaBackground() {
-	if (background1 == null) {
-		background1 = new SeaBackground();
-		return background1;
-	} else {
-		background2 = new SeaBackground();
-		background2.x = background1.x + background1.width;
-		background2.scaleX = -1;
-		return background2;
-	}
+
+function initSeaBackground(rootScene) {
+	rootScene.addChild(new SeaBackground());
+	var background2 = new SeaBackground();
+	background2.x = 800;
+	background2.scaleX = -1;
+	rootScene.addChild(background2);
 	
 }
 
-// Transition to the sky, to be implemented
+// Transition to the sky, initializing sky backgrounds
+// and moving from sea into the sky
 function toTheSky() {
 	isTransitioning = true;
+	currentState = states.SKY;
+	var background1 = new SkyBackground();
+	background1.y = -600;
+	var background2 = new SkyBackground();
+	background2.y = -600;
+	background2.x = 800;
+	background2.scaleX = -1;
+	var scene = enchant.Game.instance.rootScene;
+	scene.addChild(background1);
+	scene.addChild(background2);
 }
