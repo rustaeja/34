@@ -46,13 +46,35 @@ window.onload = function() {
      */
     game.onload = function() {
         var rootScene = game.rootScene,
-            player = new Player();
+            backGround = new Background("res/sea.jpg"),
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 3.3);
 
-        var backGround = new Background("res/sea.jpg");
         rootScene.addChild(backGround);
-
         rootScene.addChild(player);
     };
+
+    game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
+        var rootScene = game.rootScene,
+            input = game.input,
+            player = rootScene.childNodes[1],   // Find a better way to retrieve the element I want
+            movementSpeed = player.movementSpeed;
+            backGround = rootScene.childNodes[0];
+
+        if (input.left) {
+            backGround.x += movementSpeed;
+            player.look("left");
+        }
+        if (input.right) {
+            backGround.x -= movementSpeed;
+            player.look("right");
+        }
+        if (input.up) {
+            player.y -= movementSpeed;
+        }
+        if (input.down) {
+            player.y += movementSpeed;
+        }
+    });
 
     /**
      * Core#start

@@ -1,8 +1,8 @@
 var Background = enchant.Class.create(enchant.Sprite, {
-	initialize: function(imagePath) {
+	initialize: function(spritePath) {
 		var gameInstance = enchant.Game.instance;
 
-		Sprite.call(this, 800, 600);
-		this.image = gameInstance.assets[imagePath];
+		Sprite.call(this, gameInstance.width, gameInstance.height);
+		this.image = gameInstance.assets[spritePath];
 	}
 });
