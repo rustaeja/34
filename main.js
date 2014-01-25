@@ -31,7 +31,7 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("assets/player/fish.png", "assets/background/sea.jpg", "assets/background/sky.jpg");
+    game.preload("graphics/GreenFish.png", "graphics/background/sea.jpg", "graphics/background/sky.jpg");
 
     /**
      * Core#onload
