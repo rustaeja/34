@@ -47,7 +47,7 @@ window.onload = function() {
     game.onload = function() {
         var rootScene = game.rootScene,
             backGround = new Background("res/sea.jpg"),
-            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 3.3);
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 7); // increased speed for faster testing
 
         rootScene.addChild(backGround);
         rootScene.addChild(player);
@@ -69,10 +69,14 @@ window.onload = function() {
             player.look("right");
         }
         if (input.up) {
-            player.y -= movementSpeed;
+            if (player.y - movementSpeed >= 0) {
+                player.y -= movementSpeed;
+            }
         }
         if (input.down) {
-            player.y += movementSpeed;
+            if (player.y + movementSpeed + player.height <= game.rootScene.height) {
+                player.y += movementSpeed;
+            }
         }
     });
 
