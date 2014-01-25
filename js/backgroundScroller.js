@@ -61,6 +61,7 @@ var SkyBackground = enchant.Class.create(enchant.Sprite, {
 });
 
 
+// Initialize the sea backgrounds and add them to the screen
 function initSeaBackground(rootScene) {
 	rootScene.addChild(new SeaBackground());
 	var background2 = new SeaBackground();
