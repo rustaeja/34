@@ -4,7 +4,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	initialize: function() {
 		var game = enchant.Game.instance;
 		Sprite.call(this, 22, 12);
-		this.image = game.assets["graphics/GreenFish.png"];
+		this.image = game.assets["res/fish_stage/player/GreenFish.png"];
 	},
 
 	onenterframe: function() {
