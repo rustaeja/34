@@ -46,7 +46,7 @@ window.onload = function() {
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      * 必要なファイルを相対パスで引数に指定する。 ファイルはすべて、ゲームが始まる前にロードされる。
      */
-    game.preload("assets/player/fish.png", "assets/background/sea.jpg", "assets/background/sky.jpg");
+    game.preload("graphics/GreenFish.png", "graphics/background/sea.jpg", "graphics/background/sky.jpg");
 
     /**
      * Core#onload

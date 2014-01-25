@@ -13,7 +13,7 @@ var SeaBackground = enchant.Class.create(enchant.Sprite, {
 		// Load the sea image from asset
 		var game = enchant.Game.instance;
 		Sprite.call(this,800,600);
-		this.image = game.assets["assets/background/sea.jpg"];
+		this.image = game.assets["graphics/background/sea.jpg"];
 	},
 
 	onenterframe:function() {
@@ -39,7 +39,7 @@ var SkyBackground = enchant.Class.create(enchant.Sprite, {
 		// load the sky image from background
 		var game = enchant.Game.instance;
 		Sprite.call(this, 800, 600);
-		this.image = game.assets["assets/background/sky.jpg"];
+		this.image = game.assets["graphics/background/sky.jpg"];
 	},
 
 	onenterframe:function() {
