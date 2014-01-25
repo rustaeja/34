@@ -44,6 +44,9 @@ window.onload = function() {
      *     // code
      * })
      */
+
+    game.Score = 0;
+    
     game.onload = function() {
         var rootScene = game.rootScene,
             backGround = new Background("res/sea.jpg"),
@@ -51,6 +54,19 @@ window.onload = function() {
 
         rootScene.addChild(backGround);
         rootScene.addChild(player);
+
+        var scoreLabel = new Label("Score: ");
+        
+        scoreLabel.addEventListener('enterframe', function() {
+            this.text = "Score: " + game.Score;
+        });
+
+        scoreLabel.x = 800 / 2;
+        scoreLabel.y = 5;
+        scoreLabel.color = "white";
+
+        game.rootScene.addChild(scoreLabel);
+
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
