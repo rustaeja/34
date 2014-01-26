@@ -3,7 +3,7 @@
  */
  
 var fishie_player_small = {
-							path: "res/fish_stage/player/GreenFish.png",
+							path: "res/fish_stage/player/pinkfish.png",
 							height: 12,
 							width: 22,
                             dir: "chase",
@@ -11,7 +11,7 @@ var fishie_player_small = {
 							maxScale: 0.8
 						  }
 var fishie_enemy_medium_fish = {
-							path: "res/fish_stage/enemies/salmon_fry.png",
+							path: "res/fish_stage/enemies/herring.png",
 							height: 100,
 							width: 200,
                             dir: "vertical",
@@ -35,4 +35,4 @@ var fishie_enemy_small = {
 							maxScale: 0.4
 						 }
 
-fishie_enemies = [fishie_player_small, fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish];	
+fishie_enemies = [fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish];	
