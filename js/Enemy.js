@@ -5,6 +5,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		Sprite.call(this, 39, 39);
 		this.image = game.assets[name];
 		//this.randomizeSize();
+		this.randomizePosition();
 	},
 
 	randomizeSize:function(){

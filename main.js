@@ -53,9 +53,8 @@ window.onload = function() {
 
         initSeaBackground(game.rootScene);
         var player = new Player();
-		EnemyGenerator.init(fishie_enemies);
-		EnemyGenerator.genEnemy();
-		//var e = new Enemy("res/fish_stage/player/GreenFish.png");
+		var fishie_eg = new EnemyGenerator(fishie_enemies);
+		fishie_eg.genEnemy();
         game.rootScene.addChild(player);
     };
 
