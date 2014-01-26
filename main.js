@@ -81,6 +81,7 @@ window.onload = function() {
 
     game.score = 0;
     game.Level = "1 - Sea";
+	var skyController;
 
     game.onload = function() {
         var rootScene = game.rootScene,
@@ -90,9 +91,10 @@ window.onload = function() {
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, 0),
             backgroundGroup = new InfiniteBackgroundGroup();
 
-
+		skyController = new SkyController(rootScene, 3);
+					
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
-
+		
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
         rootScene.enemyController = enemyControllerRootScene;
