@@ -99,6 +99,8 @@ window.onload = function() {
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
 
+        var bird;
+
         skyController = new SkyController(rootScene, 3);
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
@@ -152,6 +154,8 @@ window.onload = function() {
             topBackground = backgroundGroup.list[1],
             amountOfTopBackgroundPixelToShow = rootScene.amountOfTopBackgroundPixelToShow;
 
+        
+        if (st == States.SEA) {
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
             enemyController.moveEnemies("horizontal", movementSpeed);
@@ -162,7 +166,7 @@ window.onload = function() {
             enemyController.moveEnemies("horizontal", -movementSpeed);
             player.look("right");
         }
-        if (st == States.SEA) {
+
         if (input.up) {
             if (player.y <= bottomBackground.height/2 && bottomBackground.y < amountOfTopBackgroundPixelToShow) {   // background moves up and down a bit
                 if (bottomBackground.y + movementSpeed > amountOfTopBackgroundPixelToShow) {
@@ -190,17 +194,14 @@ window.onload = function() {
                 player.y += movementSpeed;
             }
         }
-    } else if (st == States.SKY && isTransitioning == false) {
-
-    }
 
         if (enemyController.activeEnemies.length < enemyController.maxEnemies) {
             rootScene.addChild(enemyController.genEnemy());
         }
-    	
+        
         enemyController.topLimit = bottomBackground.y;
         enemyController.makeEnemiesMove();
-
+        
         enemyController.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
                 if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
@@ -213,6 +214,16 @@ window.onload = function() {
                 }
             }
         });
+    } else if (st == States.SKY && isTransitioning == false) {
+        // player is now bird
+        if (game.input.up) {
+            console.log(bird.y);
+            if (bird.y > 0) bird.y -= movementSpeed;
+        }
+        if (game.input.down) if (bird.y + bird.height < 600) bird.y += movementSpeed;
+        skyController.update();
+        // Do collision checking here
+    }
 
         if (input.musicToggle) {
             if (musicOn == true) {
@@ -228,25 +239,32 @@ window.onload = function() {
         if (game.score > 2 && st == States.SEA) {
             st = States.SEATOSKY;
             player.tl.moveTo(375, 210, 50).then(function() {
-                var bird = new Sprite(70, 83);
+                bird = new Sprite(70, 83);
                 bird.image = game.assets["eagle.png"];
                 game.rootScene.addChild(bird);
                 bird.tl.moveTo(375,210,15).then(function() {
                     game.rootScene.removeChild(player);
                     isTransitioning = true;
-                    // bird.tl.moveTo(800,600,15).then(function() {
-                    //     game.rootScene.removeChild(bird);
-                    // })
+                    //player = bird; //(Commented out because didn't work)
+                    
                 });
             });
             //skyController.update();
         }
 
+        if (st != States.SEA) backgroundGroup.moveLeft(movementSpeed);
+
         if (st == States.SEATOSKY && isTransitioning) {
             backgroundGroup.moveDown(movementSpeed);
+            enemyController.moveDown(movementSpeed);
+            enemyController.makeEnemiesMove();
             if (backgroundGroup.list[0].y >= 600) {
                 st = States.SKY;
-                backgroundGroup.list[0].y = 0;
+                backgroundGroup.list[0].backgroundy = 0;
+                enemyController.removeSea();
+                rootScene.levelLabel.text = "Level: 2 - Sky";
+                showControl();
+                isTransitioning = false;
                 //backgroundGroup.backgrounds[1].y = 0;
             }
         }
