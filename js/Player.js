@@ -8,6 +8,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 		this.y = posY;
 		this.movementSpeed = movementSpeed;
 		this.frameCount = frameCount;
+        this.scale(0.1, 0.1);
 	},
 
 
@@ -16,22 +17,24 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	look: function(direction) {
-		if (direction === "left" && this.scaleX > 0) {
+		if (direction === "left" && this.scaleX < 0) {
 			this.scaleX *= -1;
 		}
-		else if (direction === "right" && this.scaleX < 0) {
+		else if (direction === "right" && this.scaleX > 0) {
 			this.scaleX *= -1;
 		}
 	},
 
 	grow: function() {
-        var scaleBy = 1.1;
-		this.scale(scaleBy, scaleBy);
-		this.movementSpeed *= scaleBy; 
+        if (Math.abs(this.scaleY) < 10) {
+            var scaleBy = 1.1;
+	    	this.scale(scaleBy, scaleBy);
+		    this.movementSpeed *= scaleBy; 
+        }
 	},
 
     kill: function() {
-        // TODO Game Over
+        window.alert("Game Over");
     }
 
 });
