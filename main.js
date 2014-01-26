@@ -139,17 +139,18 @@ window.onload = function() {
 
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
-            enemyGenerator.moveEnemies(movementSpeed);
+            enemyGenerator.moveEnemies("horizontal", movementSpeed);
             player.look("left");
         }
         if (input.right) {
             backgroundGroup.moveLeft(movementSpeed);
-            enemyGenerator.moveEnemies(-movementSpeed);
+            enemyGenerator.moveEnemies("horizontal", -movementSpeed);
             player.look("right");
         }
         if (input.up) {
             if (player.y <= bottomBackground.height/2 && bottomBackground.y + movementSpeed <= 100) {   // background moves up and down a bit
                 backgroundGroup.moveDown(movementSpeed);
+                enemyGenerator.moveEnemies("vertical", movementSpeed);
             }
             else if (player.y - movementSpeed >= 0) {
                 player.y -= movementSpeed;
@@ -158,6 +159,7 @@ window.onload = function() {
         if (input.down) {
             if (player.y >= bottomBackground.height/2 && bottomBackground.y - movementSpeed >= 0) {
                 backgroundGroup.moveUp(movementSpeed);
+                enemyGenerator.moveEnemies("vertical", -movementSpeed);
             }
             else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
                 player.y += movementSpeed;

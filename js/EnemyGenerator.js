@@ -24,9 +24,14 @@ var EnemyGenerator = enchant.Class.create(enchant.Node, {
         this.activeEnemies[index] = newEnemy;
         return newEnemy;
     },
-	moveEnemies: function(movementSpeed) {
+	moveEnemies: function(direction, movementSpeed) {
 		for (var i = 0; i < this.activeEnemies.length; i++) {
-			this.activeEnemies[i].x += movementSpeed;
+			if (direction === "horizontal") {
+				this.activeEnemies[i].x += movementSpeed;
+			}
+			else {
+				this.activeEnemies[i].y += movementSpeed;
+			}
 		}
 	},
     onEnemyDied: function(enemy) {
