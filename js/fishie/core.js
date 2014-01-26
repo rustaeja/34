@@ -6,7 +6,7 @@ var fishie_player_small = {
 							path: "res/fish_stage/player/GreenFish.png",
 							height: 12,
 							width: 22,
-                            dir: "chase"
+                            dir: "vertical"
 						  }
 var fishie_enemy_medium_fish = {
 							path: "res/fish_stage/enemies/salmon_fry.png",
