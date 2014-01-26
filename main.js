@@ -1,4 +1,11 @@
 /**
+ *
+ * Global Variables
+ *
+ */
+var fishie_eg;
+
+/**
  * enchant();
  * Preparation for using enchant.js.
  * (Exporting enchant.js class to global namespace.
@@ -31,10 +38,10 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload(fishie_player_small, 
-				 fishie_enemy_medium_fish, 
-				 fishie_enemy_seal,
-				 fishie_enemy_small,
+    game.preload(fishie_player_small.path, 
+				 fishie_enemy_medium_fish.path,
+				 fishie_enemy_seal.path,
+				 fishie_enemy_small.path,
 				 "res/sea.jpg", 
 				 "res/sky.jpg");
 
@@ -53,7 +60,7 @@ window.onload = function() {
 
         initSeaBackground(game.rootScene);
         var player = new Player();
-		var fishie_eg = new EnemyGenerator(fishie_enemies);
+		fishie_eg = new EnemyGenerator(fishie_enemies);
 		fishie_eg.genEnemy();
         game.rootScene.addChild(player);
     };
