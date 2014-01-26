@@ -2,19 +2,21 @@
  * Enemy Generator
  */
  
- function EnemyGenerator(enemies){
- 
-	this.enemyArray = [];
+function EnemyGenerator(enemies){
+
+	this.enemyType = [];
+	this.enemyActive = [];
 
 	for(var i=0,len=enemies.length; i < len; i++) {
 		var e = new Enemy(enemies[i].path);
-		this.enemyArray.push(enemies[i]);
+		this.enemyType.push(enemies[i]);
 	}
 
 	this.genEnemy = function() {
-		var randomIndex = Math.floor(Math.random()*this.enemyArray.length);
+		var randomIndex = Math.floor(Math.random()*this.enemyType.length);
 		var game = enchant.Game.instance;
-		var e = new Enemy(this.enemyArray[randomIndex].path);
+		var e = new Enemy(this.enemyType[randomIndex].path);
+		this.enemyActive.push(e);
 		game.rootScene.addChild(e);
 	}
 }

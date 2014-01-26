@@ -8,6 +8,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		this.frameCount = 0;
 		this.dx = 0;
 		this.dy = 0;
+		this.dead = 0; // false
+		game.rootScene.addChild(this);
 	},
 
 	randomizeSize:function(){
@@ -34,8 +36,10 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		}
 		if (this.x > (game.width + 100) || this.x < -100) {
 			game.rootScene.removeChild(this);
+			this.dead = 1; // true
 		} else if (this.y > (game.height + 100) || this.y < -100) {
 			game.rootScene.removeChild(this);
+			this.dead = 1; // true
 		}
 	},
 
