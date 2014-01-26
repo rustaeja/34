@@ -53,6 +53,7 @@ window.onload = function() {
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
                  "res/fish_stage/player/pinkfish.png",
+                 "res/fish_stage/enemies/salmon_alevin.png",
                  "res/control.png",
                  "sound/tangent_loop.mp3",
                  "eagle.png");
@@ -162,9 +163,6 @@ window.onload = function() {
         }
         if (input.down) {
             if (player.getScaledY() >= game.height - game.height/4 && bottomBackground.y + bottomBackground.height - movementSpeed >= game.height) {
-                if (bottomBackground.y - movementSpeed < 0) {
-                    movementSpeed = bottomBackground.y;
-                }
                 backgroundGroup.moveUp(movementSpeed);
                 enemyController.moveEnemies("vertical", -movementSpeed);
             }
@@ -182,7 +180,7 @@ window.onload = function() {
 
         enemyController.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
-                if (true) {
+                if (player.scaleY > enemy.scaleY) {
                     enemy.kill();
                     player.grow();
                     game.score += 1;
