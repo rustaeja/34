@@ -4,8 +4,8 @@
  
 var fishie_player_small = {
 							path:"res/fish_stage/player/GreenFish.png",
-							height: 0,
-							width:0
+							height: 12,
+							width: 22
 						  }
 var fishie_enemy_medium_fish = {
 							path:"res/fish_stage/enemies/salmon_fry.png",
@@ -19,8 +19,8 @@ var fishie_enemy_seal = {
 						 }
 var fishie_enemy_small = {
 							path:"res/fish_stage/enemies/fishbaddie_parts.png",
-							height: 0,
-							width:0
+							height: 50,
+							width: 50
 						 }
 
 fishie_enemies = [fishie_player_small, fishie_enemy_small];	

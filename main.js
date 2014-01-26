@@ -62,7 +62,7 @@ window.onload = function() {
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
             player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
-	    fishie_eg = new EnemyGenerator(fishie_enemies);
+            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene);
 
         rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
         rootScene.player = player;
@@ -70,11 +70,11 @@ window.onload = function() {
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
 
-	rootScene.addChild(player);
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
+    	rootScene.addChild(player);
+    	rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
 
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));

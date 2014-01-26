@@ -2,21 +2,20 @@
  * Enemy Generator
  */
  
-function EnemyGenerator(enemies){
+var EnemyGenerator = enchant.Class.create(enchant.Node, {
+	initialize: function(enemiesMetaData, scene) {
+		this.enemiesMetaData = enemiesMetaData;
+		this.scene = scene;
 
-	this.enemyType = [];
-	this.enemyActive = [];
+		this.enemyType = [];
+		this.enemyActive = [];
+	},
+	genEnemy: function() {
+		var randomIndex = Math.floor(Math.random() * this.enemiesMetaData.length),
+			gameInstance = enchant.Game.instance,
+			enemy = new Enemy(this.enemiesMetaData[randomIndex], this.scene);
 
-	for(var i=0,len=enemies.length; i < len; i++) {
-		var e = new Enemy(enemies[i].path);
-		this.enemyType.push(enemies[i]);
+		this.enemyActive.push(enemy);
+		return enemy;
 	}
-
-	this.genEnemy = function() {
-		var randomIndex = Math.floor(Math.random()*this.enemyType.length);
-		var game = enchant.Game.instance;
-		var e = new Enemy(this.enemyType[randomIndex].path);
-		this.enemyActive.push(e);
-		game.rootScene.addChild(e);
-	}
-}
+});
