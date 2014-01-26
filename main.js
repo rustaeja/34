@@ -85,7 +85,6 @@ window.onload = function() {
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
-        backgroundGroup.moveDown(100);
 
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
@@ -135,7 +134,8 @@ window.onload = function() {
             input = game.input,
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
-            backgroundGroup = rootScene.backgroundGroup;
+            backgroundGroup = rootScene.backgroundGroup,
+            bottomBackground = backgroundGroup.list[0];
 
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
@@ -148,12 +148,18 @@ window.onload = function() {
             player.look("right");
         }
         if (input.up) {
-            if (player.y - movementSpeed >= 0) {
+            if (player.y <= bottomBackground.height/2 && bottomBackground.y + movementSpeed <= 100) {   // background moves up and down a bit
+                backgroundGroup.moveDown(movementSpeed);
+            }
+            else if (player.y - movementSpeed >= 0) {
                 player.y -= movementSpeed;
             }
         }
         if (input.down) {
-            if (player.y + movementSpeed + player.height <= game.rootScene.height) {
+            if (player.y >= bottomBackground.height/2 && bottomBackground.y - movementSpeed >= 0) {
+                backgroundGroup.moveUp(movementSpeed);
+            }
+            else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
                 player.y += movementSpeed;
             }
         }
