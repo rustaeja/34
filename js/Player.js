@@ -3,17 +3,20 @@ var Player = enchant.Class.create(enchant.Sprite, {
 		var gameInstance = enchant.Game.instance;
 
 		Sprite.call(this, spriteWidth, spriteHeight);
+        this.originX = this.width/2;
+        this.originY = this.height/2;
 		this.image = gameInstance.assets[spritePath];
-		this.x = posX;
-		this.y = posY;
 		this.movementSpeed = movementSpeed;
 		this.frameCount = frameCount;
+		this.x = posX - this.originX;
+		this.y = posY - this.originY;
         this.scale(0.1, 0.1);
 	},
 
 
 	onenterframe: function() {
-		this.frame = this.age % this.frameCount;
+        framesToWait = 3;
+		this.frame = Math.floor(this.age / framesToWait) % this.frameCount;
 	},
 
 	look: function(direction) {
@@ -35,6 +38,19 @@ var Player = enchant.Class.create(enchant.Sprite, {
 
     kill: function() {
         window.alert("Game Over");
+    },
+
+    getScaledX: function() {
+        return this.x + this.originX;
+    },
+
+    getScaledY: function() {
+        return this.y + this.originY;
+    },
+
+    getScaledHeight: function() {
+        return this.height*this.scaleY;
     }
+
 
 });

@@ -48,9 +48,11 @@ window.onload = function() {
 				 fishie_enemy_small.path,
 				 "res/sea.jpg", 
 				 "res/sky.jpg",
+				 "res/background.png",
 				 "res/menu.jpg",
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
+                 "res/fish_stage/player/pinkfish.png",
                  "res/control.png",
                  "sound/tangent_loop.mp3");
 
@@ -77,16 +79,13 @@ window.onload = function() {
 
     game.onload = function() {
         var rootScene = game.rootScene,
-            mainBackGround = new Background("res/sea.jpg", 0, 0),
-            rightBackGround = new Background("res/sea.jpg", game.width, 0),
-            skyMainBackground = new Background("res/sky.jpg", 0, -game.height),
-            skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
-            player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
+            mainBackGround = new Background("res/background.png", 0, -1500 + game.height, 2550, 1500),
+            rightBackGround = new Background("res/background.png", 2550, -1500 + game.height, 2550, 1500),
+            player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
             enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene),
             backgroundGroup = new InfiniteBackgroundGroup();
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
-        backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
 
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
@@ -94,8 +93,6 @@ window.onload = function() {
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
-        rootScene.addChild(skyMainBackground);
-        rootScene.addChild(skyRightBackground);
 
         player.grow();
     	rootScene.addChild(player);
@@ -144,20 +141,20 @@ window.onload = function() {
             player.look("right");
         }
         if (input.up) {
-            if (player.y <= bottomBackground.height/2 && bottomBackground.y + movementSpeed <= 100) {   // background moves up and down a bit
+            if (player.getScaledY() <= game.height/4 && bottomBackground.y + movementSpeed <= 100) {   // background moves up and down a bit
                 backgroundGroup.moveDown(movementSpeed);
                 enemyGenerator.moveEnemies("vertical", movementSpeed);
             }
-            else if (player.y - movementSpeed >= 0) {
+            else if (player.getScaledY() - movementSpeed >= 0) {
                 player.y -= movementSpeed;
             }
         }
         if (input.down) {
-            if (player.y >= bottomBackground.height/2 && bottomBackground.y - movementSpeed >= 0) {
+            if (player.getScaledY() >= game.height - game.height/4 && bottomBackground.y + bottomBackground.height - movementSpeed >= game.height) {
                 backgroundGroup.moveUp(movementSpeed);
                 enemyGenerator.moveEnemies("vertical", -movementSpeed);
             }
-            else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
+            else if (player.getScaledY() + movementSpeed + player.getScaledHeight() <= game.height) {
                 player.y += movementSpeed;
             }
         }
@@ -167,7 +164,7 @@ window.onload = function() {
     	
         rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
-                if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
+                if (true) {
                     enemy.kill();
                     player.grow();
                     game.score += 1;

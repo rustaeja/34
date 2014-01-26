@@ -38,8 +38,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
                 this.dx = randomSpeed;
                 this.dy = 0;
             } else {
-				var xDif = this.scene.player.x - this.x;
-				var yDif = this.scene.player.y - this.y;
+				var xDif = this.scene.player.getScaledX() - this.x;
+				var yDif = this.scene.player.getScaledY() - this.y;
 				// too far, don't chase
 				if (Math.abs(xDif) > game.width || 
 					Math.abs(yDif) > game.height ||
