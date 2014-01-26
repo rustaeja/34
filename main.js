@@ -62,7 +62,7 @@ window.onload = function() {
         var rootScene = game.rootScene,
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
-            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 6), // increased speed for faster testing
             enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene);
 
         rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
@@ -82,6 +82,7 @@ window.onload = function() {
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
+            enemyGenerator = rootScene.enemyGenerator,
             input = game.input,
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
@@ -89,10 +90,12 @@ window.onload = function() {
 
         if (input.left) {
             backGround.moveRight(movementSpeed);
+            enemyGenerator.moveEnemies(movementSpeed);
             player.look("left");
         }
         if (input.right) {
             backGround.moveLeft(movementSpeed);
+            enemyGenerator.moveEnemies(-movementSpeed);
             player.look("right");
         }
         if (input.up) {
