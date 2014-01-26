@@ -1,23 +1,28 @@
-var movementSpeed = 3.3;
-
 var Player = enchant.Class.create(enchant.Sprite, {
-	initialize: function() {
-		var game = enchant.Game.instance;
-		Sprite.call(this, 22, 12);
-		this.image = game.assets["res/fish_stage/player/GreenFish.png"];
+	initialize: function(spritePath, spriteWidth, spriteHeight, posX, posY, movementSpeed) {
+		var gameInstance = enchant.Game.instance;
+
+		Sprite.call(this, spriteWidth, spriteHeight);
+		this.image = gameInstance.assets[spritePath];
+		this.x = posX;
+		this.y = posY;
+		this.movementSpeed = movementSpeed;
 	},
 
-	onenterframe: function() {
-		var game = enchant.Game.instance;
-		if (game.input.left) {
-			this.x -= movementSpeed;
-			this.scaleX = 1;
+	look: function(direction) {
+		if (direction === "left") {
+			if (this.scaleX > 0)
+			this.scaleX *= -1;
 		}
-  	    if (game.input.right) {
-  	    	this.x += movementSpeed;
-  	    	this.scaleX = -1;
-  	    }
-  	    if (game.input.up) this.y -= movementSpeed;
-  	    if (game.input.down) this.y += movementSpeed;
+		else {
+			if (this.ScaleX < 0)
+			this.scaleX *= 1;
+		}
+	},
+
+	grow: function() {
+		this.scale(1.5, 1.5);
+		this.movementSpeed *= 1.5
 	}
+
 });

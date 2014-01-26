@@ -43,7 +43,8 @@ window.onload = function() {
 				 fishie_enemy_seal.path,
 				 fishie_enemy_small.path,
 				 "res/sea.jpg", 
-				 "res/sky.jpg");
+				 "res/sky.jpg",
+				 "res/menu.jpg");
 
     /**
      * Core#onload
@@ -56,14 +57,58 @@ window.onload = function() {
      *     // code
      * })
      */
-    game.onload = function(){
+    game.onload = function() {
+        var rootScene = game.rootScene,
+            mainBackGround = new Background("res/sea.jpg", 0, 0),
+            rightBackGround = new Background("res/sea.jpg", game.width, 0),
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
+	    fishie_eg = new EnemyGenerator(fishie_enemies);
 
-        initSeaBackground(game.rootScene);
-        var player = new Player();
-		fishie_eg = new EnemyGenerator(fishie_enemies);
-		fishie_eg.genEnemy();
-        game.rootScene.addChild(player);
+
+        rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
+
+        rootScene.addChild(mainBackGround);
+        rootScene.addChild(rightBackGround);
+
+	rootScene.addChild(player);
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
+
+	rootScene.player = player;
+
+        var background = new Sprite(800, 600);
+        background.image = game.assets["res/menu.jpg"];
+        game.pushScene(new MenuScene(background, "PLAY"));
     };
+
+    game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
+        var rootScene = game.rootScene,
+            input = game.input,
+            player = rootScene.player,
+            movementSpeed = player.movementSpeed;
+            backGround = rootScene.backGround;
+
+        if (input.left) {
+            backGround.moveRight(movementSpeed);
+            player.look("left");
+        }
+        if (input.right) {
+            backGround.moveLeft(movementSpeed);
+            player.look("right");
+        }
+        if (input.up) {
+            if (player.y - movementSpeed >= 0) {
+                player.y -= movementSpeed;
+            }
+        }
+        if (input.down) {
+            if (player.y + movementSpeed + player.height <= game.rootScene.height) {
+                player.y += movementSpeed;
+            }
+        }
+    });
 
     /**
      * Core#start

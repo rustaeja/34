@@ -1,5 +1,4 @@
 var Enemy = enchant.Class.create(enchant.Sprite, {
-
 	initialize:function(name) {
 		var game = enchant.Game.instance;
 		Sprite.call(this, 39, 39);
@@ -13,7 +12,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 
 	randomizeSize:function(){
 		// Generate a random number between 0.5 and 3.5
-		var randomScale = Math.random() * 3 + 0.5;
+		var randomScale = Math.random();
 		this.scaleX = randomScale;
 		this.scaleY = randomScale;
 	},
