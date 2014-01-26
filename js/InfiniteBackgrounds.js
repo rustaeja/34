@@ -1,54 +1,54 @@
-var InfiniteBackground = enchant.Class.create(enchant.Sprite, {
+var InfiniteBackground = enchant.Class.create(enchant.Node, {
 	initialize: function(mainBackground, rightBackground) {
-		var backGrounds = new Array();
+		var backgrounds = new Array();
 
-		backGrounds[0] = mainBackground;
-		backGrounds[1] = rightBackground;
+		backgrounds[0] = mainBackground;
+		backgrounds[1] = rightBackground;
 
-		this.backGrounds = backGrounds;
-		this.y = backGrounds[0].y;
-		this.height = backGrounds[0].height;
+		this.backgrounds = backgrounds;
+		this.y = backgrounds[0].y;
+		this.height = backgrounds[0].height;
 	},
 	moveLeft: function(movementSpeed) {
 		var gameInstance = enchant.Game.instance,
-			backGrounds = this.backGrounds;
+			backgrounds = this.backgrounds;
 
-		backGrounds[0].x -= movementSpeed;
-		backGrounds[1].x -= movementSpeed;
+		backgrounds[0].x -= movementSpeed;
+		backgrounds[1].x -= movementSpeed;
 
-		if (backGrounds[0].x <= -gameInstance.width) {
-			backGrounds[0].x = backGrounds[1].x + backGrounds[1].width;
-			var temp = backGrounds[0];
-			backGrounds[0] = backGrounds[1];
-			backGrounds[1] = temp;
+		if (backgrounds[0].x <= -gameInstance.width) {
+			backgrounds[0].x = backgrounds[1].x + backgrounds[1].width;
+			var temp = backgrounds[0];
+			backgrounds[0] = backgrounds[1];
+			backgrounds[1] = temp;
 		}
 	},
 	moveRight: function(movementSpeed) {
 		var gameInstance = enchant.Game.instance,
-			backGrounds = this.backGrounds;
+			backgrounds = this.backgrounds;
 
-		backGrounds[0].x += movementSpeed;
-		backGrounds[1].x += movementSpeed;
+		backgrounds[0].x += movementSpeed;
+		backgrounds[1].x += movementSpeed;
 
-		if (backGrounds[0].x >= 0) {
-			backGrounds[1].x = backGrounds[0].x - backGrounds[0].width;
-			var temp = backGrounds[0];
-			backGrounds[0] = backGrounds[1];
-			backGrounds[1] = temp;
+		if (backgrounds[0].x >= 0) {
+			backgrounds[1].x = backgrounds[0].x - backgrounds[0].width;
+			var temp = backgrounds[0];
+			backgrounds[0] = backgrounds[1];
+			backgrounds[1] = temp;
 		}
 	},
 	moveDown: function(movementSpeed) {
-		var backGrounds = this.backGrounds;
+		var backgrounds = this.backgrounds;
 
-		backGrounds[0].y += movementSpeed;
-		backGrounds[1].y += movementSpeed;
-		this.y = backGrounds[0].y;
+		backgrounds[0].y += movementSpeed;
+		backgrounds[1].y += movementSpeed;
+		this.y = backgrounds[0].y;
 	},
 	moveUp: function(movementSpeed) {
-		var backGrounds = this.backGrounds;
+		var backgrounds = this.backgrounds;
 
-		backGrounds[0].y -= movementSpeed;
-		backGrounds[1].y -= movementSpeed;
-		this.y = backGrounds[0].y;
+		backgrounds[0].y -= movementSpeed;
+		backgrounds[1].y -= movementSpeed;
+		this.y = backgrounds[0].y;
 	}
 });

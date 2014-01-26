@@ -1,4 +1,4 @@
-var InfiniteBackgroundGroup = enchant.Class.create(enchant.Sprite, {
+var InfiniteBackgroundGroup = enchant.Class.create(enchant.Node, {
 	initialize: function() {
 		this.list = [];
 		this.size = 0;

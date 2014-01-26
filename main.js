@@ -135,7 +135,9 @@ window.onload = function() {
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
             backgroundGroup = rootScene.backgroundGroup,
-            bottomBackground = backgroundGroup.list[0];
+            bottomBackground = backgroundGroup.list[0],
+            topBackground = backgroundGroup.list[1],
+            amountOfTopBackgroundPixelToShow = 100;
 
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
@@ -148,16 +150,33 @@ window.onload = function() {
             player.look("right");
         }
         if (input.up) {
-            if (player.y <= bottomBackground.height/2 && bottomBackground.y + movementSpeed <= 100) {   // background moves up and down a bit
+            if (player.y <= bottomBackground.height/2 && bottomBackground.y < amountOfTopBackgroundPixelToShow) {   // background moves up and down a bit
+                if (bottomBackground.y + movementSpeed > amountOfTopBackgroundPixelToShow) {
+                    movementSpeed = amountOfTopBackgroundPixelToShow - bottomBackground.y;
+                }
                 backgroundGroup.moveDown(movementSpeed);
                 enemyGenerator.moveEnemies("vertical", movementSpeed);
             }
-            else if (player.y - movementSpeed >= 0) {
+            else {
                 player.y -= movementSpeed;
+                if (player.intersectStrict(topBackground.backgrounds[0] || player.intersectStrict(topBackground.backgrounds[1]))) {
+                    player.y = amountOfTopBackgroundPixelToShow;
+                }
             }
+            /*else if (player.y > amountOfTopBackgroundPixelToShow) {
+                if (player.y - movementSpeed < amountOfTopBackgroundPixelToShow) {
+                    player.y = amountOfTopBackgroundPixelToShow;
+                }
+                else {
+                    player.y -= movementSpeed;
+                }
+            }*/
         }
         if (input.down) {
-            if (player.y >= bottomBackground.height/2 && bottomBackground.y - movementSpeed >= 0) {
+            if (player.y >= bottomBackground.height/2 && bottomBackground.y > 0) {
+                if (bottomBackground.y - movementSpeed < 0) {
+                    movementSpeed = bottomBackground.y;
+                }
                 backgroundGroup.moveUp(movementSpeed);
                 enemyGenerator.moveEnemies("vertical", -movementSpeed);
             }
