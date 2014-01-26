@@ -19,8 +19,13 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	grow: function() {
-		this.scale(1.5, 1.5);
-		this.movementSpeed *= 1.5
-	}
+        var scaleBy = 1.2;
+		this.scale(scaleBy, scaleBy);
+		this.movementSpeed *= scaleBy; 
+	},
+
+    kill: function() {
+        // TODO Game Over
+    }
 
 });

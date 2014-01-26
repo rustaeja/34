@@ -1,5 +1,5 @@
 var Enemy = enchant.Class.create(enchant.Sprite, {
-	initialize:function(enemyMetaData, scene) {
+	initialize:function(enemyMetaData, scene, enemyGenerator) {
 		var game = enchant.Game.instance;
 
 		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
@@ -9,8 +9,9 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		this.frameCount = 0;
 		this.dx = 0;
 		this.dy = 0;
-		this.dead = 0; // false
+		this.dead = false; // false
 		this.scene = scene;
+        this.enemyGenerator = enemyGenerator;
 	},
 
 	randomizeSize:function(){
@@ -36,13 +37,16 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 			this.y += this.dy;
 		}
 		if (this.x > (game.width + 100) || this.x < -100) {
-			this.scene.removeChild(this);
-			this.dead = 1; // true
+            this.kill();
 		} else if (this.y > (game.height + 100) || this.y < -100) {
-			this.scene.removeChild(this);
-			this.dead = 1; // true
+            this.kill();
 		}
 	},
+
+    kill:function() {
+        this.dead = true;
+        this.enemyGenerator.onEnemyDied(this);
+    },
 
 	randomizePosition:function() {
 		var game = enchant.Game.instance;

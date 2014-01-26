@@ -109,12 +109,19 @@ window.onload = function() {
             }
         }
 
-        if (rootScene.enemyGenerator.enemyActive.length < 10)
+        if (enemyGenerator.activeEnemies.length < enemyGenerator.maxEnemies)
             rootScene.addChild(rootScene.enemyGenerator.genEnemy());
     	
-        rootScene.enemyGenerator.enemyActive.forEach(function(enemy) {
-            if (enemy.intersect(rootScene.player))
-                alert("poop");
+        rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
+            if (enemy.intersect(rootScene.player) && enemy.dead == false) {
+                if (enemy.scaleX >= player.scaleX) {
+                    enemy.kill();
+                    player.grow();
+                    rootScene.addChild(enemyGenerator.genEnemy());
+                } else {
+                    player.kill();
+                }
+            }
         });
     });
 
