@@ -20,7 +20,8 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 		var me = this,
 			randomIndex = Math.floor(Math.random() * me.enemiesMetaData.length),
 			gameInstance = enchant.Game.instance,
-			enemy = new Enemy(me.enemiesMetaData[randomIndex], me.scene, me.topLimit, me.replaceEnemyCallback);
+			enemy = new Enemy(me.enemiesMetaData[randomIndex], me.scene, me.replaceEnemyCallback);
+			enemy.randomizePosition(me.topLimit);
 
 		me.activeEnemies.push(enemy);
 
@@ -30,7 +31,8 @@ var EnemyController = enchant.Class.create(enchant.Node, {
     	var me = this,
     		randomIndex = Math.floor(Math.random() * me.enemiesMetaData.length),
         	index = me.activeEnemies.indexOf(enemy),
-        	newEnemy = new Enemy(me.enemiesMetaData[randomIndex], me.scene, me.topLimit, me.replaceEnemyCallback);
+        	newEnemy = new Enemy(me.enemiesMetaData[randomIndex], me.scene, me.replaceEnemyCallback);
+			newEnemy.randomizePosition(me.topLimit);
 
 		me.activeEnemies[index] = newEnemy;
 
@@ -48,7 +50,7 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 	},
 	makeEnemiesMove: function() {
 		for (var i = 0; i < this.activeEnemies.length; i++) {
-			this.activeEnemies[i].move();
+			this.activeEnemies[i].move(this. topLimit);
 		}
 	}
 });

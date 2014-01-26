@@ -87,7 +87,7 @@ window.onload = function() {
             skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
             player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
             amountOfTopBackgroundPixelToShow = 100,
-            EnemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
+            enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
@@ -96,7 +96,7 @@ window.onload = function() {
         rootScene.amountOfTopBackgroundPixelToShow = amountOfTopBackgroundPixelToShow;
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
-        rootScene.EnemyController = EnemyControllerRootScene;
+        rootScene.enemyController = enemyControllerRootScene;
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
@@ -132,7 +132,7 @@ window.onload = function() {
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
-            EnemyController = rootScene.EnemyController,
+            enemyController = rootScene.enemyController,
             input = game.input,
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
@@ -143,12 +143,12 @@ window.onload = function() {
 
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
-            EnemyController.moveEnemies("horizontal", movementSpeed);
+            enemyController.moveEnemies("horizontal", movementSpeed);
             player.look("left");
         }
         if (input.right) {
             backgroundGroup.moveLeft(movementSpeed);
-            EnemyController.moveEnemies("horizontal", -movementSpeed);
+            enemyController.moveEnemies("horizontal", -movementSpeed);
             player.look("right");
         }
         if (input.up) {
@@ -157,7 +157,7 @@ window.onload = function() {
                     movementSpeed = amountOfTopBackgroundPixelToShow - bottomBackground.y;
                 }
                 backgroundGroup.moveDown(movementSpeed);
-                EnemyController.moveEnemies("vertical", movementSpeed);
+                enemyController.moveEnemies("vertical", movementSpeed);
             }
             else if (player.y - movementSpeed - (player.height * player.scaleY / 2) > amountOfTopBackgroundPixelToShow) {
                 player.y -= movementSpeed;
@@ -172,20 +172,21 @@ window.onload = function() {
                     movementSpeed = bottomBackground.y;
                 }
                 backgroundGroup.moveUp(movementSpeed);
-                EnemyController.moveEnemies("vertical", -movementSpeed);
+                enemyController.moveEnemies("vertical", -movementSpeed);
             }
             else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
                 player.y += movementSpeed;
             }
         }
 
-        if (EnemyController.activeEnemies.length < EnemyController.maxEnemies) {
-            rootScene.addChild(EnemyController.genEnemy());
+        if (enemyController.activeEnemies.length < enemyController.maxEnemies) {
+            rootScene.addChild(enemyController.genEnemy());
         }
     	
-        EnemyController.makeEnemiesMove();
+        enemyController.topLimit = bottomBackground.y;
+        enemyController.makeEnemiesMove();
 
-        EnemyController.activeEnemies.forEach(function(enemy) {
+        enemyController.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
                 if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
                     enemy.kill();

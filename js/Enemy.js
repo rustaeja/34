@@ -1,5 +1,5 @@
 var Enemy = enchant.Class.create(enchant.Sprite, {
-	initialize:function(enemyMetaData, scene, topLimit, callback) {
+	initialize:function(enemyMetaData, scene, callback) {
 		var game = enchant.Game.instance;
 
 		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
@@ -13,9 +13,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
         this.dir = enemyMetaData.dir;
 		this.dead = false; // false
 		this.scene = scene;
-        this.topLimit = topLimit;
         this.callback = callback;		
-        this.randomizePosition();
         this.randomizeSize(enemyMetaData.minScale, enemyMetaData.maxScale);
 	},
 
@@ -30,7 +28,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		this.scaleY = randomScale;
 	},
 
-	move:function() {
+	move:function(topLimit) {
 		var game = enchant.Game.instance;
 		if (this.frameCount <= 0) {
 			var randomSpeed = Math.floor(Math.random()*6 - 3);
@@ -77,8 +75,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 			this.y += this.dy;
 		}
 
-		if (this.y < this.topLimit) {
-			this.y = this.topLimit;
+		if (this.y < topLimit) {
+			this.y = topLimit;
 		}
 
 		if (this.x > (game.width + game.width/2) || this.x < -game.width/2) {
@@ -93,7 +91,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
         this.callback(this);
     },
 
-	randomizePosition:function() {
+	randomizePosition:function(topLimit) {
 		var game = enchant.Game.instance;
 
         // Randomize Left or Right to enter from
@@ -105,8 +103,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
             this.y = game.height;	// don't spawn from the top
         } 
         else {
-            var random = Math.floor(Math.random() * (game.height - this.topLimit));
-            this.y = random + this.topLimit;
+            var random = Math.floor(Math.random() * (game.height - topLimit));
+            this.y = random + topLimit;
 
             if (randomEnter === 0) {
                 // Enemy spawn from left
