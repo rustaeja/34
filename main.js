@@ -86,15 +86,17 @@ window.onload = function() {
             skyMainBackground = new Background("res/sky.jpg", 0, -game.height),
             skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
             player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
-            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene),
+            amountOfTopBackgroundPixelToShow = 100,
+            EnemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
 
+        rootScene.amountOfTopBackgroundPixelToShow = amountOfTopBackgroundPixelToShow;
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
-        rootScene.enemyGenerator = enemyGeneratorRootScene;
+        rootScene.EnemyController = EnemyControllerRootScene;
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
@@ -130,23 +132,23 @@ window.onload = function() {
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
-            enemyGenerator = rootScene.enemyGenerator,
+            EnemyController = rootScene.EnemyController,
             input = game.input,
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
             backgroundGroup = rootScene.backgroundGroup,
             bottomBackground = backgroundGroup.list[0],
             topBackground = backgroundGroup.list[1],
-            amountOfTopBackgroundPixelToShow = 100;
+            amountOfTopBackgroundPixelToShow = rootScene.amountOfTopBackgroundPixelToShow;
 
         if (input.left) {
             backgroundGroup.moveRight(movementSpeed);
-            enemyGenerator.moveEnemies("horizontal", movementSpeed);
+            EnemyController.moveEnemies("horizontal", movementSpeed);
             player.look("left");
         }
         if (input.right) {
             backgroundGroup.moveLeft(movementSpeed);
-            enemyGenerator.moveEnemies("horizontal", -movementSpeed);
+            EnemyController.moveEnemies("horizontal", -movementSpeed);
             player.look("right");
         }
         if (input.up) {
@@ -155,7 +157,7 @@ window.onload = function() {
                     movementSpeed = amountOfTopBackgroundPixelToShow - bottomBackground.y;
                 }
                 backgroundGroup.moveDown(movementSpeed);
-                enemyGenerator.moveEnemies("vertical", movementSpeed);
+                EnemyController.moveEnemies("vertical", movementSpeed);
             }
             else if (player.y - movementSpeed - (player.height * player.scaleY / 2) > amountOfTopBackgroundPixelToShow) {
                 player.y -= movementSpeed;
@@ -170,18 +172,20 @@ window.onload = function() {
                     movementSpeed = bottomBackground.y;
                 }
                 backgroundGroup.moveUp(movementSpeed);
-                enemyGenerator.moveEnemies("vertical", -movementSpeed);
+                EnemyController.moveEnemies("vertical", -movementSpeed);
             }
             else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
                 player.y += movementSpeed;
             }
         }
 
-        if (enemyGenerator.activeEnemies.length < enemyGenerator.maxEnemies) {
-            rootScene.addChild(rootScene.enemyGenerator.genEnemy());
+        if (EnemyController.activeEnemies.length < EnemyController.maxEnemies) {
+            rootScene.addChild(EnemyController.genEnemy());
         }
     	
-        rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
+        EnemyController.makeEnemiesMove();
+
+        EnemyController.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
                 if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
                     enemy.kill();
