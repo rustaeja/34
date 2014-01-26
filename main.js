@@ -44,7 +44,8 @@ window.onload = function() {
 				 fishie_enemy_small.path,
 				 "res/sea.jpg", 
 				 "res/sky.jpg",
-				 "res/menu.jpg");
+				 "res/menu.jpg",
+                 "res/fish_stage/fishSkeleton.png");
 
     /**
      * Core#onload
@@ -62,28 +63,22 @@ window.onload = function() {
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
             player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
-	    fishie_eg = new EnemyGenerator(fishie_enemies);
+            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene);
 
         rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
         rootScene.player = player;
+        rootScene.enemyGenerator = enemyGeneratorRootScene;
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
 
-	    rootScene.addChild(player);
-	    fishie_eg.genEnemy();
-	    fishie_eg.genEnemy();
-	    fishie_eg.genEnemy();
-	    fishie_eg.genEnemy();
-	    rootScene.on('enterframe', function() {
-            player.grow();
-        });
+        player.grow();
+
+    	rootScene.addChild(player);
 
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
     };
-
-
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
@@ -110,6 +105,14 @@ window.onload = function() {
                 player.y += movementSpeed;
             }
         }
+
+        if (rootScene.enemyGenerator.enemyActive.length < 10)
+            rootScene.addChild(rootScene.enemyGenerator.genEnemy());
+    	
+        rootScene.enemyGenerator.enemyActive.forEach(function(enemy) {
+            if (enemy.intersect(rootScene.player))
+                alert("poop");
+        });
     });
 
     /**
