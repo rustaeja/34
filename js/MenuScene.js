@@ -11,7 +11,7 @@ var MenuScene = enchant.Class.create(enchant.Scene, {
 		label.y = 400;
 		this.addChild(label);
 
-		label.addEventListener(enchant.Event.A_BUTTON_UP, function() {
+		label.addEventListener(enchant.Event.TOUCH_END, function() {
             game.popScene(this);
         });
 	}
