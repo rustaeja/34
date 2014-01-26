@@ -29,7 +29,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	grow: function() {
-        if (Math.abs(this.scaleY) < 10) {
+        if (Math.abs(this.scaleY) < 6) {
             var scaleBy = 1.1;
 	    	this.scale(scaleBy, scaleBy);
 		    this.movementSpeed *= scaleBy; 
