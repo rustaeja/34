@@ -15,12 +15,16 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		this.scene = scene;
         this.enemyGenerator = enemyGenerator;
 		this.randomizePosition();
-        this.randomizeSize();
+        this.randomizeSize(enemyMetaData.minScale, enemyMetaData.maxScale);
 	},
 
-	randomizeSize:function(){
-		// Generate a random number between 0.5 and 3.5
+	randomizeSize:function(minScale, maxScale){
 		var randomScale = Math.random();
+		if (randomScale < minScale) {
+			randomScale = minScale;
+		} else if (randomScale > maxScale) {
+			randomScale = maxScale;
+		}
 		this.scaleX = randomScale;
 		this.scaleY = randomScale;
 	},
@@ -43,7 +47,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 				// too far, don't chase
 				if (Math.abs(xDif) > game.width || 
 					Math.abs(yDif) > game.height ||
-					Math.abs(this.scaleX) < Math.abs(this.scene.player.scaleX)) {
+					Math.abs(this.scaleX) <= Math.abs(this.scene.player.scaleX)) {
 					var randomSpeed2 = Math.floor(Math.random()*6 - 3);
 					this.x += randomSpeed;
 					this.y += randomSpeed2;
