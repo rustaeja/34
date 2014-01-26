@@ -10,14 +10,14 @@ var fishie_player_small = {
 						  }
 var fishie_enemy_medium_fish = {
 							path: "res/fish_stage/enemies/salmon_fry.png",
-							height: 331,
-							width: 669,
+							height: 100,
+							width: 200,
                             dir: "vertical"
 						       }
 var fishie_enemy_seal = {
 							path: "res/fish_stage/enemies/seal.png",
-							height: 222,
-							width: 336,
+							height: 128,
+							width: 194,
                             dir: "chase"
 						 }
 var fishie_enemy_small = {
