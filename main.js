@@ -24,7 +24,11 @@ window.onload = function() {
     /**
      * new Core(width, height)
      */
-    var game = new Core(800, 600);
+
+    var screenWidth = 800;
+    var screenHeight = 600; 
+
+    var game = new Core(screenWidth, screenHeight);
 
     /**
      * Core.fps
@@ -45,7 +49,15 @@ window.onload = function() {
 				 "res/sea.jpg", 
 				 "res/sky.jpg",
 				 "res/menu.jpg",
-                 "res/fish_stage/fishSkeleton.png");
+                 "res/fish_stage/fishSkeleton.png",
+                 "sound/tangent_loop.mp3");
+
+    backgroundMusic = new Audio('sound/tangent_loop.mp3');
+    backgroundMusic.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+
 
     /**
      * Core#onload
@@ -58,6 +70,9 @@ window.onload = function() {
      *     // code
      * })
      */
+
+    game.Score = 0;
+
     game.onload = function() {
         var rootScene = game.rootScene,
             mainBackGround = new Background("res/sea.jpg", 0, 0),
@@ -76,8 +91,35 @@ window.onload = function() {
 
     	rootScene.addChild(player);
 
+        backgroundMusic.play();
+
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
+
+        // Display labels. Will move this all this out. 
+        var scoreLabel = new Label("Score: ");
+        
+        scoreLabel.addEventListener('enterframe', function() {
+            this.text = "Score: " + game.Score;
+        });
+
+        scoreLabel.x = screenWidth / 2;
+        scoreLabel.y = 5;
+        scoreLabel.color = "white";
+        scoreLabel.font = '20px strong';
+        game.rootScene.addChild(scoreLabel);
+
+        var levelLabel = new Label("Level: ");
+        levelLabel.addEventListener('enterframe', function() {
+            this.text = "Level: " + game.Level;
+        });
+
+        levelLabel.x = 10;
+        levelLabel.y = 5;
+        levelLabel.color = "white";
+        levelLabel.font = '20px strong';
+        game.rootScene.addChild(levelLabel);
+
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
