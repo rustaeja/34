@@ -3,18 +3,18 @@ var SkyEnemy = enchant.Class.create(enchant.Sprite, {
 		var game = enchant.Game.instance;
 		Sprite.call(this, width, height);
 		this.image = game.assets[enemyPath];
-		this.init();
+		//this.init();
 	},
 
 	init: function() {
-		// this.randomizePosition();
-		// this.randomizeDirection();
-		// this.randomizeScale();
-		this.x = 700;
-		this.y = 300;
-		this.dx = 0.5;
-		this.dy = 0.5;
+		this.randomizePosition();
+		this.randomizeTarget();
+		this.randomizeScale();
 		this.isDead = false;
+		var time = Math.random() * 300 + 50;
+		this.tl.moveTo(this.targetX, this.targetY, time).then(function() {
+			this.isDead = true;
+		});
 	},
 
 	randomizePosition:function() {
@@ -53,5 +53,10 @@ var SkyEnemy = enchant.Class.create(enchant.Sprite, {
 		var num = Math.random() + 0.5;
 		this.scaleX = num;
 		this.scaleY = num;
+	},
+
+	randomizeTarget: function() {
+		this.targetX = -150;
+		this.targetY = Math.random() * 600;
 	}
 });

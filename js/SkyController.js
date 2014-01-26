@@ -23,13 +23,14 @@ var SkyController = enchant.Class.create(enchant.Entity, {
 			var first = new SkyEnemy("eagle.png", 70, 83);
 			this.enemies.push(first);
 			this.scene.addChild(first);
+			first.init();
 		}
 
 		this.checkDeadEnemies();
 
-			for (var i = 0; i < this.enemies.length; i++) {
-				this.enemies[i].update();
-		}
+		// for (var i = 0; i < this.enemies.length; i++) {
+		// 		this.enemies[i].update();
+		// }
 	},
 
 	stopGenerating:function() {
@@ -43,6 +44,7 @@ var SkyController = enchant.Class.create(enchant.Entity, {
 				if (this.enemies.length < this.enemyNumLimit) {
 					var eagle = new SkyEnemy("eagle.png", 70, 83);
 					this.scene.addChild(eagle);
+					eagle.init();
 					this.enemies.push(eagle);
 				}
 			}

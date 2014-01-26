@@ -4,7 +4,14 @@
  *
  */
 var fishie_eg;
+var States = {
+    SEA: 0,
+    SKY: 1,
+    SEATOSKY:2
+};
 
+var st = States.SEA;
+var isTransitioning = false;
 /**
  * enchant();
  * Preparation for using enchant.js.
@@ -155,6 +162,7 @@ window.onload = function() {
             enemyController.moveEnemies("horizontal", -movementSpeed);
             player.look("right");
         }
+        if (st == States.SEA) {
         if (input.up) {
             if (player.y <= bottomBackground.height/2 && bottomBackground.y < amountOfTopBackgroundPixelToShow) {   // background moves up and down a bit
                 if (bottomBackground.y + movementSpeed > amountOfTopBackgroundPixelToShow) {
@@ -182,6 +190,9 @@ window.onload = function() {
                 player.y += movementSpeed;
             }
         }
+    } else if (st == States.SKY && isTransitioning == false) {
+
+    }
 
         if (enemyController.activeEnemies.length < enemyController.maxEnemies) {
             rootScene.addChild(enemyController.genEnemy());
@@ -213,8 +224,31 @@ window.onload = function() {
             }
         }
 
-        if (game.score > 2) {
-            // Do something here
+        //CINEMATICS!!
+        if (game.score > 2 && st == States.SEA) {
+            st = States.SEATOSKY;
+            player.tl.moveTo(375, 210, 50).then(function() {
+                var bird = new Sprite(70, 83);
+                bird.image = game.assets["eagle.png"];
+                game.rootScene.addChild(bird);
+                bird.tl.moveTo(375,210,15).then(function() {
+                    game.rootScene.removeChild(player);
+                    isTransitioning = true;
+                    // bird.tl.moveTo(800,600,15).then(function() {
+                    //     game.rootScene.removeChild(bird);
+                    // })
+                });
+            });
+            //skyController.update();
+        }
+
+        if (st == States.SEATOSKY && isTransitioning) {
+            backgroundGroup.moveDown(movementSpeed);
+            if (backgroundGroup.list[0].y >= 600) {
+                st = States.SKY;
+                backgroundGroup.list[0].y = 0;
+                //backgroundGroup.backgrounds[1].y = 0;
+            }
         }
     });
 
