@@ -44,26 +44,55 @@ window.onload = function() {
      *     // code
      * })
      */
-    game.onload = function(){
+    game.onload = function() {
+        var rootScene = game.rootScene,
+            mainBackGround = new Background("res/sea.jpg", 0, 0),
+            rightBackGround = new Background("res/sea.jpg", game.width, 0),
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
+	    enemy = new Enemy();
 
-        initSeaBackground(game.rootScene);
-        var player = new Player();
-	var enemy = new Enemy();
-	
-	player.grow();
+        rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
 
-	game.rootScene.addChild(player);
-	game.rootScene.addChild(enemy);
+        rootScene.addChild(mainBackGround);
+        rootScene.addChild(rightBackGround);
 
-	game.rootScene.on('enterframe', function() {
-		if (player.intersect(enemy)) {
-			alert("noob");
-		}
-	});
+	rootScene.addChild(enemy);
+	rootScene.addChild(player);
 
-	
-	game.pushScene(game.rootScene);
+	for (var i = 0; i < 100; i++) {
+		var enem = new Enemy();
+		rootScene.addChild(enem);
+	}
+
+	rootScene.player = player;
     };
+
+    game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
+        var rootScene = game.rootScene,
+            input = game.input,
+            player = rootScene.player,
+            movementSpeed = player.movementSpeed;
+            backGround = rootScene.backGround;
+
+        if (input.left) {
+            backGround.moveRight(movementSpeed);
+            player.look("left");
+        }
+        if (input.right) {
+            backGround.moveLeft(movementSpeed);
+            player.look("right");
+        }
+        if (input.up) {
+            if (player.y - movementSpeed >= 0) {
+                player.y -= movementSpeed;
+            }
+        }
+        if (input.down) {
+            if (player.y + movementSpeed + player.height <= game.rootScene.height) {
+                player.y += movementSpeed;
+            }
+        }
+    });
 
     /**
      * Core#start
