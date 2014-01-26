@@ -50,6 +50,7 @@ window.onload = function() {
 				 "res/sky.jpg",
 				 "res/menu.jpg",
                  "res/fish_stage/fishSkeleton.png",
+                 "res/fish_stage/player/spriteSheet.png",
                  "sound/tangent_loop.mp3");
 
     backgroundMusic = new Audio('sound/tangent_loop.mp3');
@@ -79,7 +80,7 @@ window.onload = function() {
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
             skyMainBackground = new Background("res/sky.jpg", 0, -game.height),
             skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
-            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 6), // increased speed for faster testing
+            player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
             enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene),
             backgroundGroup = new InfiniteBackgroundGroup();
 
