@@ -31,7 +31,7 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("res/fish_stage/player/GreenFish.png", "res/fish_stage/enemies/seal.png", "res/sea.jpg", "res/sky.jpg");
+    game.preload("res/fish_stage/player/GreenFish.png", "res/fish_stage/enemies/seal.png", "res/sea.jpg", "res/sky.jpg", "res/menu.jpg");
 
     /**
      * Core#onload
@@ -65,6 +65,10 @@ window.onload = function() {
 	}
 
 	rootScene.player = player;
+
+        var background = new Sprite(800, 600);
+        background.image = game.assets["res/menu.jpg"];
+        game.pushScene(new MenuScene(background, "PLAY"));
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
