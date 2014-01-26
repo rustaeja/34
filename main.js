@@ -51,6 +51,7 @@ window.onload = function() {
 				 "res/menu.jpg",
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
+                 "res/control.png",
                  "sound/tangent_loop.mp3");
 
     backgroundMusic = new Audio('sound/tangent_loop.mp3');
@@ -184,3 +185,18 @@ window.onload = function() {
     game.start();
     window.scrollTo(0, 0);
 };
+
+
+function showControl() {
+
+    var game = enchant.Game.instance;
+    var control = new Sprite(250, 173);
+    control.image = game.assets["res/control.png"];
+    control.x = 300;
+    control.y = 200;
+    game.rootScene.addChild(control);
+    control.tl.fadeOut(60).then(function(){
+        game.rootScene.removeChild(control);
+    });
+
+}
