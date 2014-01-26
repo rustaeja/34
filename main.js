@@ -70,15 +70,20 @@ window.onload = function() {
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
 
-	rootScene.addChild(player);
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
-	fishie_eg.genEnemy();
+	    rootScene.addChild(player);
+	    fishie_eg.genEnemy();
+	    fishie_eg.genEnemy();
+	    fishie_eg.genEnemy();
+	    fishie_eg.genEnemy();
+	    rootScene.on('enterframe', function() {
+            player.grow();
+        });
 
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
     };
+
+
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
