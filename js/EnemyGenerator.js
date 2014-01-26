@@ -7,7 +7,7 @@ var EnemyGenerator = enchant.Class.create(enchant.Node, {
 		this.enemiesMetaData = enemiesMetaData;
 		this.scene = scene;
 		this.activeEnemies = [];
-        this.maxEnemies = 5;
+        this.maxEnemies = 100;
 	},
 	genEnemy: function() {
 		var randomIndex = Math.floor(Math.random() * this.enemiesMetaData.length),

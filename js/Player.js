@@ -8,6 +8,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 		this.y = posY;
 		this.movementSpeed = movementSpeed;
 		this.frameCount = frameCount;
+        this.scale(0.1, 0.1);
 	},
 
 
@@ -33,7 +34,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
     kill: function() {
-        // TODO Game Over
+        window.alert("Game Over");
     }
 
 });

@@ -41,9 +41,9 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 				var xDif = this.scene.player.x - this.x;
 				var yDif = this.scene.player.y - this.y;
 				// too far, don't chase
-				if (Math.abs(xDif) > game.width/4 || 
-					Math.abs(yDif) > game.height/4 ||
-					this.scaleX < this.scene.player.scaleX) {
+				if (Math.abs(xDif) > game.width || 
+					Math.abs(yDif) > game.height ||
+					Math.abs(this.scaleX) < Math.abs(this.scene.player.scaleX)) {
 					var randomSpeed2 = Math.floor(Math.random()*6 - 3);
 					this.x += randomSpeed;
 					this.y += randomSpeed2;
@@ -51,8 +51,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 					this.dy = randomSpeed2;					
 				} else {
 					var randomAcceleration = Math.random();
-					var xSpeed = Math.floor(Math.sqrt(Math.abs(xDif * randomAcceleration)) % 3);
-					var ySpeed = Math.floor(Math.sqrt(Math.abs(yDif * randomAcceleration)) % 3);
+					var xSpeed = Math.floor(Math.sqrt(Math.abs(xDif * randomAcceleration)) % 3) + 1;
+					var ySpeed = Math.floor(Math.sqrt(Math.abs(yDif * randomAcceleration)) % 3) + 1;
 					if (xDif < 0) {
 						xSpeed = -xSpeed;
 					}
@@ -65,7 +65,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 					this.dy = ySpeed;
 				}
             }
-			this.frameCount = Math.floor(Math.random()*70);
+			this.frameCount = Math.floor(Math.random()*20);
 		} else {
 			this.frameCount = this.frameCount - 1;
 			this.x += this.dx;
