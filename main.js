@@ -1,4 +1,11 @@
 /**
+ *
+ * Global Variables
+ *
+ */
+var fishie_eg;
+
+/**
  * enchant();
  * Preparation for using enchant.js.
  * (Exporting enchant.js class to global namespace.
@@ -31,7 +38,13 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("res/fish_stage/player/GreenFish.png", "res/fish_stage/enemies/seal.png", "res/sea.jpg", "res/sky.jpg", "res/menu.jpg");
+    game.preload(fishie_player_small.path, 
+				 fishie_enemy_medium_fish.path,
+				 fishie_enemy_seal.path,
+				 fishie_enemy_small.path,
+				 "res/sea.jpg", 
+				 "res/sky.jpg",
+				 "res/menu.jpg");
 
     /**
      * Core#onload
@@ -49,7 +62,7 @@ window.onload = function() {
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
             player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
-            enemy = new Enemy();
+	    fishie_eg = new EnemyGenerator(fishie_enemies);
 
         rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
         rootScene.player = player;
@@ -57,13 +70,11 @@ window.onload = function() {
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
 
-    	rootScene.addChild(enemy);
-    	rootScene.addChild(player);
-
-    	for (var i = 0; i < 100; i++) {
-    		var enem = new Enemy();
-    		rootScene.addChild(enem);
-    	}
+	rootScene.addChild(player);
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
+	fishie_eg.genEnemy();
 
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
