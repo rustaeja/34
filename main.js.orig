@@ -177,9 +177,9 @@ window.onload = function() {
             }
         }
 
-        if (enemyGenerator.activeEnemies.length < enemyGenerator.maxEnemies) {
+<<<<<<< HEAD
+        if (enemyGenerator.activeEnemies.length < enemyGenerator.maxEnemies)
             rootScene.addChild(rootScene.enemyGenerator.genEnemy());
-        }
     	
         rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
@@ -193,16 +193,17 @@ window.onload = function() {
                 }
             }
         });
-
+=======
         if (input.musicToggle) {
-            if (musicOn == true) {
+            if (musicOn == true)
+            {
                 musicOn = false;
                 backgroundMusic.pause();
             }
-            else {
+            else
                 musicOn = true;
-            }
         }
+>>>>>>> tiana
     });
 
 

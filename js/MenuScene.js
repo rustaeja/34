@@ -13,7 +13,11 @@ var MenuScene = enchant.Class.create(enchant.Scene, {
 
 		label.addEventListener(enchant.Event.TOUCH_END, function() {
             game.popScene(this);
+            showControl();
         });
 	}
+
+
+    
 
 });
