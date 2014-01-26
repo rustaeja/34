@@ -88,8 +88,8 @@ window.onload = function() {
 
     game.onload = function() {
         var rootScene = game.rootScene,
-            mainBackGround = new Background("res/background.png", 0, -1500 + game.height, 2550, 1500),
-            rightBackGround = new Background("res/background.png", 2550, -1500 + game.height, 2550, 1500),
+            mainBackGround = new Background("res/background.png", 0, -2000+ game.height, 3400, 2000),
+            rightBackGround = new Background("res/background.png", 3400, -2000+ game.height, 3400, 2000),
             player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, 0),
             backgroundGroup = new InfiniteBackgroundGroup();
@@ -171,7 +171,7 @@ window.onload = function() {
                 backgroundGroup.moveUp(movementSpeed);
                 enemyController.moveEnemies("vertical", -movementSpeed);
             }
-            else if (player.getScaledY() + movementSpeed + player.getScaledHeight() <= game.height) {
+            else if (player.getScaledY() + movementSpeed <= game.height) {
                 player.y += movementSpeed;
             }
         }
