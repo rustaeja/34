@@ -49,26 +49,24 @@ window.onload = function() {
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
             player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 10), // increased speed for faster testing
-	    enemy = new Enemy();
+            enemy = new Enemy();
 
         rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
+        rootScene.player = player;
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
 
-	rootScene.addChild(enemy);
-	rootScene.addChild(player);
+    	rootScene.addChild(enemy);
+    	rootScene.addChild(player);
 
-	for (var i = 0; i < 100; i++) {
-		var enem = new Enemy();
-		rootScene.addChild(enem);
-	}
+    	for (var i = 0; i < 100; i++) {
+    		var enem = new Enemy();
+    		rootScene.addChild(enem);
+    	}
 
-	rootScene.player = player;
-
-        var background = new Sprite(800, 600);
-        background.image = game.assets["res/menu.jpg"];
-        game.pushScene(new MenuScene(background, "PLAY"));
+        var menuBackground = new Background("res/menu.jpg", 0, 0);
+        game.pushScene(new MenuScene(menuBackground, "PLAY"));
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {

@@ -10,13 +10,11 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	look: function(direction) {
-		if (direction === "left") {
-			if (this.scaleX > 0)
+		if (direction === "left" && this.scaleX > 0) {
 			this.scaleX *= -1;
 		}
-		else {
-			if (this.ScaleX < 0)
-			this.scaleX *= 1;
+		else if (direction === "right" && this.scaleX < 0) {
+			this.scaleX *= -1;
 		}
 	},
 
