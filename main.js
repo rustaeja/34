@@ -20,7 +20,7 @@ window.onload = function() {
 
     var screenWidth = 800;
     var screenHeight = 600; 
-    
+
     var game = new Core(screenWidth, screenHeight);
 
     /**
@@ -59,7 +59,7 @@ window.onload = function() {
         rootScene.addChild(backGround);
         rootScene.addChild(player);
 
-        //add score label. Move all this out later. 
+        // Display labels. Will move this all this out later. 
         var scoreLabel = new Label("Score: ");
         
         scoreLabel.addEventListener('enterframe', function() {
@@ -69,6 +69,7 @@ window.onload = function() {
         scoreLabel.x = screenWidth / 2;
         scoreLabel.y = 5;
         scoreLabel.color = "white";
+        scoreLabel.font = '20px strong';
 
         game.rootScene.addChild(scoreLabel);
 
@@ -80,6 +81,8 @@ window.onload = function() {
         levelLabel.x = 10;
         levelLabel.y = 5;
         levelLabel.color = "white";
+        levelLabel.font = '20px strong';
+
         game.rootScene.addChild(levelLabel);
 
     };
