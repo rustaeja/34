@@ -56,7 +56,8 @@ window.onload = function() {
                  "res/fish_stage/enemies/salmon_alevin.png",
                  "res/control.png",
                  "sound/tangent_loop.mp3",
-                 "eagle.png");
+                 "eagle.png", 
+                 "sound/fishEat.mp3");
 
     game.keybind(77, 'musicToggle');    // m
 
@@ -65,6 +66,8 @@ window.onload = function() {
         this.currentTime = 0;
         this.play();
     }, false);
+
+    fishEatMusic = new Audio('sound/fishEat.mp3');
 
     var musicOn = true;
 
@@ -185,6 +188,7 @@ window.onload = function() {
                     player.grow();
                     game.score += 1;
                     rootScene.scoreLabel.text = "Score: " + game.score;
+                    fishEatMusic.play();
                 } else {
                     player.kill();
                 }
