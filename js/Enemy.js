@@ -1,43 +1,61 @@
-var states;
-
 var Enemy = enchant.Class.create(enchant.Sprite, {
-
-	var targetX;
-
-	initialize:function() {
+	initialize:function(enemyMetaData, scene) {
 		var game = enchant.Game.instance;
-		Sprite.call(this, 39, 39);
-		this.image = game.assets["assets/enemy/enemyFish.png"];
-		this.randomizeSize();
 
+		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
+		this.image = game.assets[enemyMetaData.path];
+		//this.randomizeSize();
+		this.randomizePosition();
+		this.frameCount = 0;
+		this.dx = 0;
+		this.dy = 0;
+		this.dead = 0; // false
+		this.scene = scene;
 	},
 
 	randomizeSize:function(){
 		// Generate a random number between 0.5 and 3.5
-		var randomScale = Math.random() * 3 + 0.5;
+		var randomScale = Math.random();
 		this.scaleX = randomScale;
 		this.scaleY = randomScale;
 	},
 
 	onenterframe:function() {
-		this.x += dx;
-		this.y += dy;
+		var game = enchant.Game.instance;
+		if (this.frameCount <= 0) {
+			var randomX = Math.floor(Math.random()*6 - 3);
+			var randomY = Math.floor(Math.random()*6 - 3);
+			this.x += randomX;
+			this.y += randomY;
+			this.dx = randomX;
+			this.dy = randomY;
+			this.frameCount = Math.floor(Math.random()*70);
+		} else {
+			this.frameCount = this.frameCount - 1;
+			this.x += this.dx;
+			this.y += this.dy;
+		}
+		if (this.x > (game.width + 100) || this.x < -100) {
+			this.scene.removeChild(this);
+			this.dead = 1; // true
+		} else if (this.y > (game.height + 100) || this.y < -100) {
+			this.scene.removeChild(this);
+			this.dead = 1; // true
+		}
 	},
 
 	randomizePosition:function() {
-		this.y = Math.random() * 600;
+		var game = enchant.Game.instance;
+		this.y = Math.random() * game.height;
 		// Generate either 1 or 0
 		var randomNumber = Math.floor(Math.random()*2);
 		if (randomNumber == 0) {
 			// Enemy spawn from left
 			this.x = -50;
-			targetX = 
 		} else {
 			// Enemy spawn from right
-			this.x = 650;
-
+			this.x = game.width + 50;
 		}
-
 	}
 
 });

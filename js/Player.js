@@ -10,27 +10,17 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	look: function(direction) {
-		if (direction === "left") {
-			this.scaleX = -1;
+		if (direction === "left" && this.scaleX > 0) {
+			this.scaleX *= -1;
 		}
-		else {
-			this.scaleX = 1;
+		else if (direction === "right" && this.scaleX < 0) {
+			this.scaleX *= -1;
 		}
+	},
+
+	grow: function() {
+		this.scale(1.5, 1.5);
+		this.movementSpeed *= 1.5
 	}
 
-/*
-	onenterframe: function() {
-		var game = enchant.Game.instance;
-		if (game.input.left) {
-			this.x -= movementSpeed;
-			this.scaleX = 1;
-		}
-  	    if (game.input.right) {
-  	    	this.x += movementSpeed;
-  	    	this.scaleX = -1;
-  	    }
-  	    if (game.input.up) this.y -= movementSpeed;
-  	    if (game.input.down) this.y += movementSpeed;
-	}
-	*/
 });

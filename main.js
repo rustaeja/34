@@ -1,4 +1,11 @@
 /**
+ *
+ * Global Variables
+ *
+ */
+var fishie_eg;
+
+/**
  * enchant();
  * Preparation for using enchant.js.
  * (Exporting enchant.js class to global namespace.
@@ -35,13 +42,22 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("res/fish_stage/player/GreenFish.png", "res/sea.jpg", "res/sky.jpg", "sound/tangent_loop.mp3");
-    
+    game.preload(fishie_player_small.path, 
+				 fishie_enemy_medium_fish.path,
+				 fishie_enemy_seal.path,
+				 fishie_enemy_small.path,
+				 "res/sea.jpg", 
+				 "res/sky.jpg",
+				 "res/menu.jpg",
+                 "res/fish_stage/fishSkeleton.png",
+                 "sound/tangent_loop.mp3");
+
     backgroundMusic = new Audio('sound/tangent_loop.mp3');
     backgroundMusic.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
     }, false);
+
 
     /**
      * Core#onload
@@ -59,14 +75,29 @@ window.onload = function() {
 
     game.onload = function() {
         var rootScene = game.rootScene,
-            backGround = new Background("res/sea.jpg"),
-            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 7); // increased speed for faster testing
+            mainBackGround = new Background("res/sea.jpg", 0, 0),
+            rightBackGround = new Background("res/sea.jpg", game.width, 0),
+            player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 6), // increased speed for faster testing
+            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene);
 
-        rootScene.addChild(backGround);
-        rootScene.addChild(player);
+        rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
+        rootScene.player = player;
+        rootScene.enemyGenerator = enemyGeneratorRootScene;
+
+        rootScene.addChild(mainBackGround);
+        rootScene.addChild(rightBackGround);
+
+    	rootScene.addChild(player);
+    	rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
+        rootScene.addChild(enemyGeneratorRootScene.genEnemy());
 
         backgroundMusic.play();
- 
+
+        var menuBackground = new Background("res/menu.jpg", 0, 0);
+        game.pushScene(new MenuScene(menuBackground, "PLAY"));
+
         // Display labels. Will move this all this out. 
         var scoreLabel = new Label("Score: ");
         
@@ -78,7 +109,6 @@ window.onload = function() {
         scoreLabel.y = 5;
         scoreLabel.color = "white";
         scoreLabel.font = '20px strong';
-
         game.rootScene.addChild(scoreLabel);
 
         var levelLabel = new Label("Level: ");
@@ -90,24 +120,26 @@ window.onload = function() {
         levelLabel.y = 5;
         levelLabel.color = "white";
         levelLabel.font = '20px strong';
-
         game.rootScene.addChild(levelLabel);
 
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
         var rootScene = game.rootScene,
+            enemyGenerator = rootScene.enemyGenerator,
             input = game.input,
-            player = rootScene.childNodes[1],   // Find a better way to retrieve the element I want
+            player = rootScene.player,
             movementSpeed = player.movementSpeed;
-            backGround = rootScene.childNodes[0];
+            backGround = rootScene.backGround;
 
         if (input.left) {
-            backGround.x += movementSpeed;
+            backGround.moveRight(movementSpeed);
+            enemyGenerator.moveEnemies(movementSpeed);
             player.look("left");
         }
         if (input.right) {
-            backGround.x -= movementSpeed;
+            backGround.moveLeft(movementSpeed);
+            enemyGenerator.moveEnemies(-movementSpeed);
             player.look("right");
         }
         if (input.up) {
