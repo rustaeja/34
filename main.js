@@ -158,11 +158,11 @@ window.onload = function() {
                 backgroundGroup.moveDown(movementSpeed);
                 enemyGenerator.moveEnemies("vertical", movementSpeed);
             }
-            else {
+            else if (player.y - movementSpeed - (player.height * player.scaleY / 2) > amountOfTopBackgroundPixelToShow) {
                 player.y -= movementSpeed;
-                if (player.intersectStrict(topBackground.backgrounds[0]) || player.intersectStrict(topBackground.backgrounds[1])) {
-                    player.y = amountOfTopBackgroundPixelToShow + (player.height * player.scaleY / 2);
-                }
+            }
+            else {
+                player.y = amountOfTopBackgroundPixelToShow + (player.height * player.scaleY / 2);
             }
         }
         if (input.down) {
