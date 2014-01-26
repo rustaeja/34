@@ -166,7 +166,7 @@ window.onload = function() {
     	
         rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
-                if (enemy.scaleX >= player.scaleX) {
+                if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
                     enemy.kill();
                     player.grow();
                     game.score += 1;

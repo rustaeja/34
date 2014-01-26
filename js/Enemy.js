@@ -15,6 +15,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		this.scene = scene;
         this.enemyGenerator = enemyGenerator;
 		this.randomizePosition();
+        this.randomizeSize();
 	},
 
 	randomizeSize:function(){
