@@ -159,18 +159,10 @@ window.onload = function() {
             }
             else {
                 player.y -= movementSpeed;
-                if (player.intersectStrict(topBackground.backgrounds[0] || player.intersectStrict(topBackground.backgrounds[1]))) {
-                    player.y = amountOfTopBackgroundPixelToShow;
+                if (player.intersectStrict(topBackground.backgrounds[0]) || player.intersectStrict(topBackground.backgrounds[1])) {
+                    player.y = amountOfTopBackgroundPixelToShow + (player.height * player.scaleY / 2);
                 }
             }
-            /*else if (player.y > amountOfTopBackgroundPixelToShow) {
-                if (player.y - movementSpeed < amountOfTopBackgroundPixelToShow) {
-                    player.y = amountOfTopBackgroundPixelToShow;
-                }
-                else {
-                    player.y -= movementSpeed;
-                }
-            }*/
         }
         if (input.down) {
             if (player.y >= bottomBackground.height/2 && bottomBackground.y > 0) {
