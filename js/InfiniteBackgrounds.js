@@ -16,7 +16,7 @@ var InfiniteBackground = enchant.Class.create(enchant.Node, {
 		backgrounds[0].x -= movementSpeed;
 		backgrounds[1].x -= movementSpeed;
 
-		if (backgrounds[0].x <= -gameInstance.width) {
+		if (backgrounds[0].x <= -backgrounds[0].width) {
 			backgrounds[0].x = backgrounds[1].x + backgrounds[1].width;
 			var temp = backgrounds[0];
 			backgrounds[0] = backgrounds[1];

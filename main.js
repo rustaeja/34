@@ -55,12 +55,18 @@ window.onload = function() {
 				 fishie_enemy_small.path,
 				 "res/b1.png", 
 				 "res/b2.png",
+				 "res/sea.jpg", 
+				 "res/sky.jpg",
+				 "res/background.png",
 				 "res/menu.jpg",
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
+                 "res/fish_stage/player/pinkfish.png",
+                 "res/fish_stage/enemies/salmon_alevin.png",
                  "res/control.png",
                  "sound/tangent_loop.mp3",
-                 "eagle.png");
+                 "eagle.png", 
+                 "sound/fishEat.mp3");
 
     game.keybind(77, 'musicToggle');    // m
 
@@ -69,6 +75,8 @@ window.onload = function() {
         this.currentTime = 0;
         this.play();
     }, false);
+
+    fishEatMusic = new Audio('sound/fishEat.mp3');
 
     var musicOn = true;
 
@@ -86,17 +94,16 @@ window.onload = function() {
 
     game.score = 0;
     game.Level = "1 - Sea";
-    var skyController;
+	var skyController;
 
     game.onload = function() {
         var rootScene = game.rootScene,
-            mainBackGround = new Background("res/b1.png", 0, 0),
-            rightBackGround = new Background("res/b1.png", game.width, 0),
+            mainBackGround = new Background("res/b1.png", 0, 0, 800, 600),
+            rightBackGround = new Background("res/b1.png", game.width, 0, 800, 600),
             
-            skyMainBackground = new Background("res/b2.png", 0, -game.height),
-            skyRightBackground = new Background("res/b2.png", game.width, -game.height),
+            skyMainBackground = new Background("res/b2.png", 0, -game.height, 800, 600),
+            skyRightBackground = new Background("res/b2.png", game.width, -game.height, 800, 600),
             
-            player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
             amountOfTopBackgroundPixelToShow = 100,
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
@@ -107,10 +114,11 @@ window.onload = function() {
 
         skyController = new SkyController(rootScene, 3);
 
+            player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
+
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
-
-        rootScene.amountOfTopBackgroundPixelToShow = amountOfTopBackgroundPixelToShow;
+		
         rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
         rootScene.enemyController = enemyControllerRootScene;
@@ -154,9 +162,7 @@ window.onload = function() {
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
             backgroundGroup = rootScene.backgroundGroup,
-            bottomBackground = backgroundGroup.list[0],
-            topBackground = backgroundGroup.list[1],
-            amountOfTopBackgroundPixelToShow = rootScene.amountOfTopBackgroundPixelToShow;
+            bottomBackground = backgroundGroup.list[0];
 
         
         if (st == States.SEA) {
@@ -172,29 +178,23 @@ window.onload = function() {
         }
 
         if (input.up) {
-            if (player.y <= bottomBackground.height/2 && bottomBackground.y < amountOfTopBackgroundPixelToShow) {   // background moves up and down a bit
-                if (bottomBackground.y + movementSpeed > amountOfTopBackgroundPixelToShow) {
-                    movementSpeed = amountOfTopBackgroundPixelToShow - bottomBackground.y;
-                }
+            if (player.getScaledY() <= game.height/4 && bottomBackground.y + movementSpeed <= 0) {   // background moves up and down a bit
                 backgroundGroup.moveDown(movementSpeed);
                 enemyController.moveEnemies("vertical", movementSpeed);
             }
-            else if (player.y - movementSpeed - (player.height * player.scaleY / 2) > amountOfTopBackgroundPixelToShow) {
+            else if (player.getScaledY() - movementSpeed >= 0) {
                 player.y -= movementSpeed;
             }
             else {
-                player.y = amountOfTopBackgroundPixelToShow + (player.height * player.scaleY / 2);
+                player.y = (player.height * player.scaleY / 2);
             }
         }
         if (input.down) {
-            if (player.y >= bottomBackground.height/2 && bottomBackground.y > 0) {
-                if (bottomBackground.y - movementSpeed < 0) {
-                    movementSpeed = bottomBackground.y;
-                }
+            if (player.getScaledY() >= game.height - game.height/4 && bottomBackground.y + bottomBackground.height - movementSpeed >= game.height) {
                 backgroundGroup.moveUp(movementSpeed);
                 enemyController.moveEnemies("vertical", -movementSpeed);
             }
-            else if (player.y + movementSpeed + player.height <= bottomBackground.height) {
+            else if (player.getScaledY() + movementSpeed <= game.height) {
                 player.y += movementSpeed;
             }
         }
@@ -208,11 +208,12 @@ window.onload = function() {
         
         enemyController.activeEnemies.forEach(function(enemy) {
             if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
-                if (Math.abs(enemy.scaleX) <= Math.abs(player.scaleX)) {
+                if (player.scaleY > enemy.scaleY) {
                     enemy.kill();
                     player.grow();
                     game.score += 1;
                     rootScene.scoreLabel.text = "Score: " + game.score;
+                    fishEatMusic.play();
                 } else {
                     player.kill();
                 }
