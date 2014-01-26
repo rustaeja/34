@@ -54,7 +54,7 @@ window.onload = function() {
                  "res/control.png",
                  "sound/tangent_loop.mp3");
 
-    game.keybind(77, 'musicToggle');
+    game.keybind(77, 'musicToggle');    // m
 
     backgroundMusic = new Audio('sound/tangent_loop.mp3');
     backgroundMusic.addEventListener('ended', function() {

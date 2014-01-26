@@ -1,5 +1,5 @@
 var Enemy = enchant.Class.create(enchant.Sprite, {
-	initialize:function(enemyMetaData, scene, enemyGenerator) {
+	initialize:function(enemyMetaData, scene, callback) {
 		var game = enchant.Game.instance;
 
 		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
@@ -13,9 +13,9 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
         this.dir = enemyMetaData.dir;
 		this.dead = false; // false
 		this.scene = scene;
-        this.enemyGenerator = enemyGenerator;
 		this.randomizePosition();
         this.randomizeSize();
+        this.callback = callback;
 	},
 
 	randomizeSize:function(){
@@ -80,7 +80,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 
     kill:function() {
         this.dead = true;
-        this.enemyGenerator.onEnemyDied(this);
+        this.callback(this);
     },
 
 	randomizePosition:function() {
@@ -116,5 +116,4 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
             }
         }
 	}
-
 });
