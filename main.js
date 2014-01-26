@@ -35,7 +35,13 @@ window.onload = function() {
      * You can preload all assets files before starting the game.
      * Set needed file lists in relative/absolute path for attributes of Core#preload
      */
-    game.preload("res/fish_stage/player/GreenFish.png", "res/sea.jpg", "res/sky.jpg");
+    game.preload("res/fish_stage/player/GreenFish.png", "res/sea.jpg", "res/sky.jpg", "sound/tangent_loop.mp3");
+    
+    backgroundMusic = new Audio('sound/tangent_loop.mp3');
+    backgroundMusic.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
 
     /**
      * Core#onload
@@ -59,7 +65,9 @@ window.onload = function() {
         rootScene.addChild(backGround);
         rootScene.addChild(player);
 
-        // Display labels. Will move this all this out later. 
+        backgroundMusic.play();
+ 
+        // Display labels. Will move this all this out. 
         var scoreLabel = new Label("Score: ");
         
         scoreLabel.addEventListener('enterframe', function() {
