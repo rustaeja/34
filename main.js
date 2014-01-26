@@ -53,8 +53,8 @@ window.onload = function() {
 				 fishie_enemy_medium_fish.path,
 				 fishie_enemy_seal.path,
 				 fishie_enemy_small.path,
-				 "res/sea.jpg", 
-				 "res/sky.jpg",
+				 "res/b1.jpg", 
+				 "res/b2.jpg",
 				 "res/menu.jpg",
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
@@ -90,16 +90,20 @@ window.onload = function() {
 
     game.onload = function() {
         var rootScene = game.rootScene,
-            mainBackGround = new Background("res/sea.jpg", 0, 0),
-            rightBackGround = new Background("res/sea.jpg", game.width, 0),
-            skyMainBackground = new Background("res/sky.jpg", 0, -game.height),
-            skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
+            mainBackGround = new Background("res/b1.jpg", 0, 0),
+            rightBackGround = new Background("res/b1.jpg", game.width, 0),
+            
+            skyMainBackground = new Background("res/b2.jpg", 0, -game.height),
+            skyRightBackground = new Background("res/b2.jpg", game.width, -game.height),
+            
             player = new Player("res/fish_stage/player/spriteSheet.png", 39, 39, game.width/2, game.height/2, 6, 6), // increased speed for faster testing
             amountOfTopBackgroundPixelToShow = 100,
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
 
         var bird;
+        rightBackGround.scaleX = -1;
+        skyRightBackground.scaleX = -1;
 
         skyController = new SkyController(rootScene, 3);
 
