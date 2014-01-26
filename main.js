@@ -77,18 +77,26 @@ window.onload = function() {
         var rootScene = game.rootScene,
             mainBackGround = new Background("res/sea.jpg", 0, 0),
             rightBackGround = new Background("res/sea.jpg", game.width, 0),
+            skyMainBackground = new Background("res/sky.jpg", 0, -game.height),
+            skyRightBackground = new Background("res/sky.jpg", game.width, -game.height),
             player = new Player("res/fish_stage/player/GreenFish.png", 22, 12, game.width/2, game.height/2, 6), // increased speed for faster testing
-            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene);
+            enemyGeneratorRootScene = new EnemyGenerator(fishie_enemies, rootScene),
+            backgroundGroup = new InfiniteBackgroundGroup();
 
-        rootScene.backGround = new InfiniteBackground(mainBackGround, rightBackGround);
+        backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
+        backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
+        backgroundGroup.moveDown(100);
+
+        rootScene.backgroundGroup = backgroundGroup;
         rootScene.player = player;
         rootScene.enemyGenerator = enemyGeneratorRootScene;
 
         rootScene.addChild(mainBackGround);
         rootScene.addChild(rightBackGround);
+        rootScene.addChild(skyMainBackground);
+        rootScene.addChild(skyRightBackground);
 
         player.grow();
-
     	rootScene.addChild(player);
 
         backgroundMusic.play();
@@ -119,7 +127,6 @@ window.onload = function() {
         levelLabel.color = "white";
         levelLabel.font = '20px strong';
         game.rootScene.addChild(levelLabel);
-
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
@@ -128,15 +135,15 @@ window.onload = function() {
             input = game.input,
             player = rootScene.player,
             movementSpeed = player.movementSpeed;
-            backGround = rootScene.backGround;
+            backgroundGroup = rootScene.backgroundGroup;
 
         if (input.left) {
-            backGround.moveRight(movementSpeed);
+            backgroundGroup.moveRight(movementSpeed);
             enemyGenerator.moveEnemies(movementSpeed);
             player.look("left");
         }
         if (input.right) {
-            backGround.moveLeft(movementSpeed);
+            backgroundGroup.moveLeft(movementSpeed);
             enemyGenerator.moveEnemies(-movementSpeed);
             player.look("right");
         }

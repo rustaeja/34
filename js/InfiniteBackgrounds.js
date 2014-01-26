@@ -33,5 +33,11 @@ var InfiniteBackground = enchant.Class.create(enchant.Sprite, {
 			backGrounds[0] = backGrounds[1];
 			backGrounds[1] = temp;
 		}
+	},
+	moveDown: function(movementSpeed) {
+		var backGrounds = this.backGrounds;
+		
+		backGrounds[0].y += movementSpeed;
+		backGrounds[1].y += movementSpeed;
 	}
 });
