@@ -19,7 +19,8 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
 	grow: function() {
-        var scaleBy = 1.1;
+        alert(enchant.Game.instance.score);
+        var scaleBy = 1.2;
 		this.scale(scaleBy, scaleBy);
 		this.movementSpeed *= scaleBy; 
 	},

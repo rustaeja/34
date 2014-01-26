@@ -106,10 +106,6 @@ window.onload = function() {
         // Display labels. Will move all this out. 
         rootScene.scoreLabel = new Label("Score: ");
         
-        rootScene.scoreLabel.addEventListener("enterframe", function() {
-            this.text = "Score: " + game.Score;
-        });
-
         rootScene.scoreLabel.x = screenWidth / 2;
         rootScene.scoreLabel.y = 5;
         rootScene.scoreLabel.color = "white";
@@ -117,9 +113,7 @@ window.onload = function() {
         rootScene.addChild(rootScene.scoreLabel);
 
         rootScene.levelLabel = new Label("Level: ");
-        rootScene.levelLabel.addEventListener("enterframe", function() {
-            this.text = "Level: " + game.Level;
-        });
+        rootScene.levelLabel.text = "Level: " + game.Level;
 
         rootScene.levelLabel.x = 10;
         rootScene.levelLabel.y = 5;
@@ -175,6 +169,7 @@ window.onload = function() {
                     enemy.kill();
                     player.grow();
                     game.score += 1;
+                    rootScene.scoreLabel.text = "Score: " + game.Score;
                 } else {
                     player.kill();
                 }
