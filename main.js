@@ -52,7 +52,8 @@ window.onload = function() {
                  "res/fish_stage/fishSkeleton.png",
                  "res/fish_stage/player/spriteSheet.png",
                  "res/control.png",
-                 "sound/tangent_loop.mp3");
+                 "sound/tangent_loop.mp3",
+                 "eagle.png");
 
     game.keybind(77, 'musicToggle');    // m
 
