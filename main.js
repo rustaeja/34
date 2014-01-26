@@ -76,8 +76,9 @@ window.onload = function() {
      * })
      */
 
-    game.Score = 0;
-    game.Level = "1 - Sea"
+    game.score = 0;
+    game.Level = "1 - Sea";
+    var skyController;
 
     game.onload = function() {
         var rootScene = game.rootScene,
@@ -89,6 +90,8 @@ window.onload = function() {
             amountOfTopBackgroundPixelToShow = 100,
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
             backgroundGroup = new InfiniteBackgroundGroup();
+
+        skyController = new SkyController(rootScene, 3);
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
@@ -192,7 +195,7 @@ window.onload = function() {
                     enemy.kill();
                     player.grow();
                     game.score += 1;
-                    rootScene.scoreLabel.text = "Score: " + game.Score;
+                    rootScene.scoreLabel.text = "Score: " + game.score;
                 } else {
                     player.kill();
                 }
@@ -207,6 +210,10 @@ window.onload = function() {
             else {
                 musicOn = true;
             }
+        }
+
+        if (game.score > 2) {
+            // Do something here
         }
     });
 
