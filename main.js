@@ -52,12 +52,15 @@ window.onload = function() {
                  "res/fish_stage/fishSkeleton.png",
                  "sound/tangent_loop.mp3");
 
+    game.keybind(77, 'musicToggle');
+
     backgroundMusic = new Audio('sound/tangent_loop.mp3');
     backgroundMusic.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
     }, false);
 
+    var musicOn = true;
 
     /**
      * Core#onload
@@ -72,6 +75,7 @@ window.onload = function() {
      */
 
     game.Score = 0;
+    game.Level = "1 - Sea"
 
     game.onload = function() {
         var rootScene = game.rootScene,
@@ -152,7 +156,18 @@ window.onload = function() {
                 player.y += movementSpeed;
             }
         }
+
+        if (input.musicToggle) {
+            if (musicOn == true)
+            {
+                musicOn = false;
+                backgroundMusic.pause();
+            }
+            else
+                musicOn = true;
+        }
     });
+
 
     /**
      * Core#start
