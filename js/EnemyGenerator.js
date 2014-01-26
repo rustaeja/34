@@ -35,7 +35,7 @@ var EnemyGenerator = enchant.Class.create(enchant.Node, {
 		}
 	},
     onEnemyDied: function(enemy) {
-        this.scene.addChild(this.replaceEnemy(enemy));
         this.scene.removeChild(enemy);
+        this.scene.addChild(this.replaceEnemy(enemy));
     }
 });

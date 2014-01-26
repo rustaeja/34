@@ -170,11 +170,10 @@ window.onload = function() {
             rootScene.addChild(rootScene.enemyGenerator.genEnemy());
     	
         rootScene.enemyGenerator.activeEnemies.forEach(function(enemy) {
-            if (enemy.intersect(rootScene.player) && enemy.dead == false) {
+            if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
                 if (enemy.scaleX >= player.scaleX) {
                     enemy.kill();
                     player.grow();
-                    rootScene.addChild(enemyGenerator.genEnemy());
                 } else {
                     player.kill();
                 }
