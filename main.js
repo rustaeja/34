@@ -96,30 +96,29 @@ window.onload = function() {
         var menuBackground = new Background("res/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
 
-        // Display labels. Will move this all this out. 
-        var scoreLabel = new Label("Score: ");
+        // Display labels. Will move all this out. 
+        rootScene.scoreLabel = new Label("Score: ");
         
-        scoreLabel.addEventListener('enterframe', function() {
+        rootScene.scoreLabel.addEventListener("enterframe", function() {
             this.text = "Score: " + game.Score;
         });
 
-        scoreLabel.x = screenWidth / 2;
-        scoreLabel.y = 5;
-        scoreLabel.color = "white";
-        scoreLabel.font = '20px strong';
-        game.rootScene.addChild(scoreLabel);
+        rootScene.scoreLabel.x = screenWidth / 2;
+        rootScene.scoreLabel.y = 5;
+        rootScene.scoreLabel.color = "white";
+        rootScene.scoreLabel.font = "20px strong";
+        rootScene.addChild(rootScene.scoreLabel);
 
-        var levelLabel = new Label("Level: ");
-        levelLabel.addEventListener('enterframe', function() {
+        rootScene.levelLabel = new Label("Level: ");
+        rootScene.levelLabel.addEventListener("enterframe", function() {
             this.text = "Level: " + game.Level;
         });
 
-        levelLabel.x = 10;
-        levelLabel.y = 5;
-        levelLabel.color = "white";
-        levelLabel.font = '20px strong';
-        game.rootScene.addChild(levelLabel);
-
+        rootScene.levelLabel.x = 10;
+        rootScene.levelLabel.y = 5;
+        rootScene.levelLabel.color = "white";
+        rootScene.levelLabel.font = "20px strong";
+        rootScene.addChild(rootScene.levelLabel);
     };
 
     game.rootScene.addEventListener(Event.ENTER_FRAME, function() {
@@ -159,6 +158,7 @@ window.onload = function() {
                 if (enemy.scaleX >= player.scaleX) {
                     enemy.kill();
                     player.grow();
+                    game.score += 1;
                 } else {
                     player.kill();
                 }
