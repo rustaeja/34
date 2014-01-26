@@ -44,7 +44,8 @@ window.onload = function() {
 				 fishie_enemy_small.path,
 				 "res/sea.jpg", 
 				 "res/sky.jpg",
-				 "res/menu.jpg");
+				 "res/menu.jpg",
+                 "res/fish_stage/fishSkeleton.png");
 
     /**
      * Core#onload
