@@ -50,7 +50,7 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 	},
 	makeEnemiesMove: function() {
 		for (var i = 0; i < this.activeEnemies.length; i++) {
-			this.activeEnemies[i].move(this. topLimit);
+			this.activeEnemies[i].move(this.topLimit);
 		}
 	}
 });
