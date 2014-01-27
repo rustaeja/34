@@ -4,7 +4,6 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 
 		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
 		this.image = game.assets[enemyMetaData.path];
-		//this.randomizeSize();
 		this.frameCount = 0;
         this.width = enemyMetaData.width;
         this.height = enemyMetaData.height;
@@ -18,12 +17,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 	},
 
 	randomizeSize:function(minScale, maxScale) {
-		var randomScale = Math.random();
-		if (randomScale < minScale) {
-			randomScale = minScale;
-		} else if (randomScale > maxScale) {
-			randomScale = maxScale;
-		}
+        var diff = maxScale - minScale;
+		var randomScale = Math.random() * diff + minScale;
 		this.scaleX = randomScale;
 		this.scaleY = randomScale;
 	},
@@ -79,7 +74,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 			this.y = topLimit;
 		}
 
-		if (this.x > (game.width + game.width/2) || this.x < -game.width/2) {
+		if (this.x > (game.width + game.width) || this.x < -game.width) {
             this.kill();
 		} else if (this.y > (game.height + 100)) {
             this.kill();

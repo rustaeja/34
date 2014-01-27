@@ -112,9 +112,9 @@ window.onload = function() {
         rightBackGround.scaleX = -1;
         skyRightBackground.scaleX = -1;
 
-        skyController = new SkyController(rootScene, 3);
+        skyController = new SkyController(rootScene, 15);
 
-            player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
+            player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 10, 8), // increased speed for faster testing
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
@@ -241,7 +241,7 @@ window.onload = function() {
         }
 
         //CINEMATICS!!
-        if (game.score > 2 && st == States.SEA) {
+        if (game.score > 15 && st == States.SEA) {
             st = States.SEATOSKY;
             player.tl.moveTo(375, 210, 50).then(function() {
                 bird = new Sprite(70, 83);

@@ -7,15 +7,15 @@ var fishie_player_small = {
 							height: 157,
 							width: 600,
                             dir: "chase",
-							minScale: 0.05,
-							maxScale: 0.4
+							minScale: 0.01,
+							maxScale: 0.3
 						  }
 var fishie_enemy_medium_fish = {
 							path: "res/fish_stage/enemies/herring.png",
 							height: 159,
 							width: 600,
                             dir: "vertical",
-							minScale: 0.05,
+							minScale: 0.1,
 							maxScale: 0.4
 						       }
 var fishie_enemy_seal = {
@@ -23,8 +23,8 @@ var fishie_enemy_seal = {
 							height: 396,
 							width: 600,
                             dir: "chase",
-							minScale: 0.1,
-							maxScale: 0.5
+							minScale: 0.4,
+							maxScale: 0.8
 						 }
 var fishie_enemy_small = {
 							path: "res/fish_stage/enemies/salmon_fry_animate.png",
@@ -35,4 +35,4 @@ var fishie_enemy_small = {
 							maxScale: 0.2
 						 }
 
-fishie_enemies = [fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish];	
+fishie_enemies = [fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish, fishie_player_small];	

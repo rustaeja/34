@@ -9,7 +9,7 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 		me.enemiesMetaData = enemiesMetaData;
 		me.scene = scene;
 		me.activeEnemies = [];
-        me.maxEnemies = 20;
+        me.maxEnemies = 10;
         me.topLimit = topLimit;
         me.replaceEnemyCallback = function(enemy) {
         	me.scene.removeChild(enemy);
@@ -29,8 +29,12 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 	},
     replaceEnemy: function(enemy) {
     	var me = this,
-    		randomIndex = Math.floor(Math.random() * me.enemiesMetaData.length),
-        	index = me.activeEnemies.indexOf(enemy),
+    		randomIndex = Math.floor(Math.random() * me.enemiesMetaData.length);
+            if (randomIndex == 1) {
+                randomIndex = Math.floor(Math.random() * me.enemiesMetaData.length);
+            }
+
+        var	index = me.activeEnemies.indexOf(enemy),
         	newEnemy = new Enemy(me.enemiesMetaData[randomIndex], me.scene, me.replaceEnemyCallback);
 			newEnemy.randomizePosition(me.topLimit);
 
