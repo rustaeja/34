@@ -222,12 +222,17 @@ window.onload = function() {
     } else if (st == States.SKY && isTransitioning == false) {
         // player is now bird
         if (game.input.up) {
-            console.log(bird.y);
             if (bird.y > 0) bird.y -= movementSpeed;
         }
         if (game.input.down) if (bird.y + bird.height < 600) bird.y += movementSpeed;
         skyController.update();
         // Do collision checking here
+        var enemies = skyController.enemies;
+        for (var i = 0; i < enemies.length; i++) {
+            if (bird.intersectStrict(enemies[i])) {
+                enemies[i].init();
+            }
+        }
     }
 
         if (input.musicToggle) {
