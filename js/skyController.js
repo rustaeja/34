@@ -26,6 +26,7 @@ var SkyController = enchant.Class.create(enchant.Entity, {
 			first.init();
 		}
 
+
 		this.checkDeadEnemies();
 
 		// for (var i = 0; i < this.enemies.length; i++) {
