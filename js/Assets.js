@@ -13,14 +13,34 @@ height: 600,
 width: 800,
 }
 
+var menu_bckgrd = {
+path: "res/menu.jpg",
+height: 600,
+width: 800,
+}
+
+var control_instr = {
+path: "res/control.png",
+height: 200,
+width: 300,
+}
+
+
+/*
+ * Fonts
+ */
+
+var font_color = "white";
+var font = "20px strong";
+
 
 /*
 * Fishie Stage
 */
 
-var fishie_player_small = {
-path: "res/fish_stage/enemies/salmon_alevin.png",
-height: 157,
+var fishie_player = {
+path: "res/fish_stage/player/pinkfish.png",
+height: 321,
 width: 600,
 dir: "chase",
 minScale: 0.05,
@@ -52,3 +72,30 @@ maxScale: 0.2
 }
 
 fishie_enemies = [fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish];	
+
+
+/*
+* Bird Stage
+*/
+
+var bird_player = {
+path: "eagle.png",
+height: 83,
+width: 70,
+dir: "horizontal",
+minScale: 0.02,
+maxScale: 0.2
+}
+
+
+/*
+* Noise
+*/
+
+var bckgrd_music = {
+path: "sound/tangent_loop.mp3",
+}
+
+var fish_eat_sound = {
+path: "sound/fishEat.mp3",
+}

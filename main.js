@@ -1,9 +1,5 @@
-/**
-*
-* Global Variables
-*
-*/
-var fishie_eg;
+// Global Variables
+
 var States = {
 SEA: 0,
 SKY: 1,
@@ -12,68 +8,44 @@ SEATOSKY:2
 
 var st = States.SEA;
 var isTransitioning = false;
-/**
-* enchant();
-* Preparation for using enchant.js.
-* (Exporting enchant.js class to global namespace.
-*  ex. enchant.Sprite -> Sprite etc..)
-*/
+
+// Exporting enchant.js class to global namespace.
 enchant();
 
-/*
-* window.onload
-*
-* The function which will be executed after loading page.
-* Command in enchant.js such as "new Core();" will cause an error if executed before entire page is loaded.
-*/
 window.onload = function() {
-
-	/**
-	* new Core(width, height)
-	*/
 
 	var screenWidth = 800;
 	var screenHeight = 600; 
 
 	var game = new Core(screenWidth, screenHeight);
 
-	/**
-	* Core.fps
-	*
-	* Set fps (frame per second) in this game to 15.
-	*/
 	game.fps = 30;
-	/**
-	* Core#preload
-	*
-	* You can preload all assets files before starting the game.
-	* Set needed file lists in relative/absolute path for attributes of Core#preload
-	*/
-	game.preload(fishie_player_small.path, 
-	fishie_enemy_medium_fish.path,
-	fishie_enemy_seal.path,
-	fishie_enemy_small.path,
-	b1.path, 
-	b2.path,
-	"res/menu.jpg",
-	"res/fish_stage/fishSkeleton.png",
-	"res/fish_stage/player/spriteSheet.png",
-	"res/fish_stage/player/pinkfish.png",
-	"res/fish_stage/enemies/salmon_alevin.png",
-	"res/control.png",
-	"sound/tangent_loop.mp3",
-	"eagle.png", 
-	"sound/fishEat.mp3");
+
+	// Set needed file lists in relative/absolute path for attributes of Core
+
+	game.preload(
+		fishie_player.path, 
+		fishie_enemy_medium_fish.path,
+		fishie_enemy_seal.path,
+		fishie_enemy_small.path,
+		b1.path, 
+		b2.path,
+		menu_bckgrd.path,
+		control_instr.path,
+		bckgrd_music.path,
+		bird_player.path,
+		fish_eat_sound.path
+	);
 
 	game.keybind(77, 'musicToggle');    // m
 
-	backgroundMusic = new Audio('sound/tangent_loop.mp3');
+	backgroundMusic = new Audio(bckgrd_music.path);
 	backgroundMusic.addEventListener('ended', function() {
 		this.currentTime = 0;
 		this.play();
 	}, false);
 
-	fishEatMusic = new Audio('sound/fishEat.mp3');
+	fishEatMusic = new Audio(fish_eat_sound.path);
 
 	var musicOn = true;
 
@@ -84,7 +56,7 @@ window.onload = function() {
 	game.onload = function() {
 		var rootScene = game.rootScene,
 		mainBackGround = new Background(b1.path, 0, 0, b1.width, b1.height),
-		rightBackGround = new Background(b1.path, 0, 0, b1.width, b1.height),
+		rightBackGround = new Background(b1.path, b1.width, 0, b1.width, b1.height),
 		
 		skyMainBackground = new Background(b2.path, 0, -game.height, b2.width, b2.height),
 		skyRightBackground = new Background(b2.path, game.width, -game.height, b2.width, b2.height),
@@ -99,7 +71,7 @@ window.onload = function() {
 
 		skyController = new SkyController(rootScene, 3);
 
-		player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
+		player = new Player(fishie_player.path, fishie_player.width, fishie_player.height, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
 
 		backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
 		backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
@@ -118,7 +90,7 @@ window.onload = function() {
 
 		backgroundMusic.play();
 
-		var menuBackground = new Background("res/menu.jpg", 0, 0);
+		var menuBackground = new Background(menu_bckgrd.path, 0, 0);
 		game.pushScene(new MenuScene(menuBackground, "PLAY"));
 
 		// Display labels. Will move all this out. 
@@ -126,8 +98,8 @@ window.onload = function() {
 		
 		rootScene.scoreLabel.x = screenWidth / 2;
 		rootScene.scoreLabel.y = 5;
-		rootScene.scoreLabel.color = "white";
-		rootScene.scoreLabel.font = "20px strong";
+		rootScene.scoreLabel.color = font_color;
+		rootScene.scoreLabel.font = font;
 		rootScene.addChild(rootScene.scoreLabel);
 
 		rootScene.levelLabel = new Label("Level: ");
@@ -135,8 +107,8 @@ window.onload = function() {
 
 		rootScene.levelLabel.x = 10;
 		rootScene.levelLabel.y = 5;
-		rootScene.levelLabel.color = "white";
-		rootScene.levelLabel.font = "20px strong";
+		rootScene.levelLabel.color = font_color;
+		rootScene.levelLabel.font = font;
 		rootScene.addChild(rootScene.levelLabel);
 	};
 
@@ -235,8 +207,8 @@ window.onload = function() {
 		if (game.score > 2 && st == States.SEA) {
 			st = States.SEATOSKY;
 			player.tl.moveTo(375, 210, 50).then(function() {
-				bird = new Sprite(70, 83);
-				bird.image = game.assets["eagle.png"];
+				bird = new Sprite(bird_player.width, bird_player.height);
+				bird.image = game.assets[bird_player.path];
 				game.rootScene.addChild(bird);
 				bird.tl.moveTo(375,210,15).then(function() {
 					game.rootScene.removeChild(player);
@@ -279,9 +251,9 @@ function showControl() {
 
 	var game = enchant.Game.instance;
 	var control = new Sprite(250, 173);
-	control.image = game.assets["res/control.png"];
-	control.x = 300;
-	control.y = 200;
+	control.image = game.assets[control_instr.path];
+	control.x = control_instr.width;
+	control.y = control_instr.height;
 	game.rootScene.addChild(control);
 	control.tl.fadeOut(60).then(function(){
 		game.rootScene.removeChild(control);
