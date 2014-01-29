@@ -1,5 +1,5 @@
 var Player = enchant.Class.create(enchant.Sprite, {
-	initialize: function(spritePath, spriteWidth, spriteHeight, posX, posY, movementSpeed, frameCount) {
+	initialize: function(spritePath, spriteWidth, spriteHeight, scale, posX, posY, movementSpeed, frameCount) {
 		var gameInstance = enchant.Game.instance;
 
 		Sprite.call(this, spriteWidth, spriteHeight);
@@ -10,7 +10,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 		this.frameCount = frameCount;
 		this.x = posX - this.originX;
 		this.y = posY - this.originY;
-        this.scale(0.1, 0.1);
+        this.scale(scale, scale);
 	},
 
 

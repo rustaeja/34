@@ -51,7 +51,7 @@ window.onload = function() {
 
 	game.score = 0;
 	game.Level = "1 - Sea";
-	var skyController;
+	//var skyController;
 
 	game.onload = function() {
 		var rootScene = game.rootScene,
@@ -62,23 +62,19 @@ window.onload = function() {
 		skyRightBackground = new Background(b2.path, game.width, -game.height, b2.width, b2.height),
 		
 		amountOfTopBackgroundPixelToShow = 100,
-		enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
 		backgroundGroup = new InfiniteBackgroundGroup();
 
-		var bird;
 		rightBackGround.scaleX = -1;
 		skyRightBackground.scaleX = -1;
 
-		skyController = new SkyController(rootScene, 3);
-
-		player = new Player(fishie_player.path, fishie_player.width, fishie_player.height, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
+		player = new Player(fishie_player.path, fishie_player.width, fishie_player.height, 0.1, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
 
 		backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
 		backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
 		
 		rootScene.backgroundGroup = backgroundGroup;
 		rootScene.player = player;
-		rootScene.enemyController = enemyControllerRootScene;
+		rootScene.enemyController = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow);
 
 		rootScene.addChild(mainBackGround);
 		rootScene.addChild(rightBackGround);
@@ -133,7 +129,6 @@ window.onload = function() {
 				enemyController.moveEnemies("horizontal", -movementSpeed);
 				player.look("right");
 			}
-
 			if (input.up) {
 				if (player.getScaledY() <= game.height/4 && bottomBackground.y + movementSpeed <= 0) {   // background moves up and down a bit
 					backgroundGroup.moveDown(movementSpeed);
@@ -177,19 +172,36 @@ window.onload = function() {
 				}
 			});
 		} else if (st == States.SKY && isTransitioning == false) {
-			// player is now bird
-			if (game.input.up) {
-				if (bird.y > 0) bird.y -= movementSpeed;
-			}
-			if (game.input.down) if (bird.y + bird.height < 600) bird.y += movementSpeed;
-			skyController.update();
-			// Do collision checking here
-			var enemies = skyController.enemies;
-			for (var i = 0; i < enemies.length; i++) {
-				if (bird.intersectStrict(enemies[i])) {
-					enemies[i].init();
+			if (input.up) {
+				if (player.getScaledY() - movementSpeed > 0) {
+					player.y -= movementSpeed;
+				}
+			} else if (input.down) {
+				if (player.getScaledY() + movementSpeed <= game.height) {
+					player.y += movementSpeed;
 				}
 			}
+
+			if (enemyController.activeEnemies.length < enemyController.maxEnemies) {
+				rootScene.addChild(enemyController.genEnemy());
+			}
+			
+			enemyController.topLimit = 0;
+			enemyController.makeEnemiesMove();
+			
+			enemyController.activeEnemies.forEach(function(enemy) {
+				if (enemy.intersectStrict(rootScene.player) && enemy.dead == false) {
+					if (player.scaleY > enemy.scaleY) {
+						enemy.kill();
+						player.grow();
+						game.score += 1;
+						rootScene.scoreLabel.text = "Score: " + game.score;
+						fishEatMusic.play();
+					} else {
+						player.kill();
+					}
+				}
+			});
 		}
 
 		if (input.musicToggle) {
@@ -202,22 +214,19 @@ window.onload = function() {
 			}
 		}
 
-		//CINEMATICS!!
-		//if (st == States.SEA) {
+		//animation
 		if (game.score > 2 && st == States.SEA) {
 			st = States.SEATOSKY;
-			player.tl.moveTo(375, 210, 50).then(function() {
-				bird = new Sprite(bird_player.width, bird_player.height);
-				bird.image = game.assets[bird_player.path];
+			player.tl.moveTo(game.width/2 - player.width/2, game.height/2 - player.height/2, 50).then(function() {
+				var bird = new Player(bird_player.path, bird_player.width, bird_player.height, 0.5, 0, 0, 6, 8); // increased speed for faster testing
 				game.rootScene.addChild(bird);
 				bird.tl.moveTo(375,210,15).then(function() {
+					
 					game.rootScene.removeChild(player);
 					isTransitioning = true;
-					//player = bird; //(Commented out because didn't work)
-					
+					rootScene.player = bird;
 				});
 			});
-			//skyController.update();
 		}
 
 		if (st != States.SEA) backgroundGroup.moveLeft(movementSpeed);
@@ -229,19 +238,16 @@ window.onload = function() {
 			if (backgroundGroup.list[0].y >= 600) {
 				st = States.SKY;
 				backgroundGroup.list[0].backgroundy = 0;
-				enemyController.removeSea();
+				enemyController.removeAll();
 				rootScene.levelLabel.text = "Level: 2 - Sky";
 				showControl();
 				isTransitioning = false;
-				//backgroundGroup.backgrounds[1].y = 0;
+				rootScene.enemyController.initialize(bird_enemies, rootScene, 0);
 			}
 		}
 	});
 
 
-	/**
-	* Core#start
-	*/
 	game.start();
 	window.scrollTo(0, 0);
 };

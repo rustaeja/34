@@ -32,7 +32,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		var game = enchant.Game.instance;
 		if (this.frameCount <= 0) {
 			var randomSpeed = Math.floor(Math.random()*6 - 3);
-            if (this.dir === "vertical") {
+            if (this.dir === "vertical" || this.dir ==="fly") {
                 this.y += randomSpeed;
                 this.dx = 0;
                 this.dy = randomSpeed;

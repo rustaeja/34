@@ -83,9 +83,11 @@ path: "eagle.png",
 height: 83,
 width: 70,
 dir: "horizontal",
-minScale: 0.02,
-maxScale: 0.2
+minScale: 0.2,
+maxScale: 1.2
 }
+
+bird_enemies = [bird_player];
 
 
 /*
