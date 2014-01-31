@@ -18,21 +18,15 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 	},
 
 	randomizeSize:function(minScale, maxScale) {
-		var randomScale = Math.random();
-		if (randomScale < minScale) {
-			randomScale = minScale;
-		} else if (randomScale > maxScale) {
-			randomScale = maxScale;
-		}
-		this.scaleX = randomScale;
-		this.scaleY = randomScale;
+		var randomScale = (Math.random() * (maxScale - minScale)) + minScale;
+		this.scale(randomScale, randomScale);
 	},
 
 	move:function(topLimit) {
 		var game = enchant.Game.instance;
 		if (this.frameCount <= 0) {
 			var randomSpeed = Math.floor(Math.random()*6 - 3);
-            if (this.dir === "vertical" || this.dir ==="fly") {
+            if (this.dir === "vertical") {
                 this.y += randomSpeed;
                 this.dx = 0;
                 this.dy = randomSpeed;
@@ -40,6 +34,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
                 this.x += randomSpeed;
                 this.dx = randomSpeed;
                 this.dy = 0;
+			} else if (this.dir ==="fly") {
+				
             } else {
 				var xDif = this.scene.player.getScaledX() - this.x;
 				var yDif = this.scene.player.getScaledY() - this.y;
@@ -51,7 +47,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 					this.x += randomSpeed;
 					this.y += randomSpeed2;
 					this.dx = randomSpeed;
-					this.dy = randomSpeed2;					
+					this.dy = randomSpeed2;
+				// chasing
 				} else {
 					var randomAcceleration = Math.random();
 					var xSpeed = Math.floor(Math.sqrt(Math.abs(xDif * randomAcceleration)) % 3) + 1;
@@ -93,9 +90,6 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 
 	randomizePosition:function(topLimit) {
 		var game = enchant.Game.instance;
-
-        // Randomize Left or Right to enter from
-		var randomEnter = Math.floor(Math.random()*2);
         
         if (this.dir === "vertical") {
             var random = Math.floor(Math.random() * game.width);
@@ -105,10 +99,15 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
         else {
             var random = Math.floor(Math.random() * (game.height - topLimit));
             this.y = random + topLimit;
+			
+			// Randomize Left or Right to enter from
+			var randomEnter = Math.floor(Math.random()*2);
 
             if (randomEnter === 0) {
                 // Enemy spawn from left
-                this.x = -this.width;
+				this.scaleX = -this.scaleX;
+                this.x = -game.width/2; // idk why this works, should be whats below
+				//-(this.width * Math.abs(this.scaleX));
             } 
             else {
                 // Enemy spawn from right

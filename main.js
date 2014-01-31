@@ -67,7 +67,7 @@ window.onload = function() {
 		rightBackGround.scaleX = -1;
 		skyRightBackground.scaleX = -1;
 
-		player = new Player(fishie_player.path, fishie_player.width, fishie_player.height, 0.1, game.width/2, game.height/2, 6, 8), // increased speed for faster testing
+		player = new Player(fishie_player.path, fishie_player.width, fishie_player.height, 0.1, game.width/2, game.height/2, 6, 0, 8), // increased speed for faster testing
 
 		backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
 		backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
@@ -218,7 +218,7 @@ window.onload = function() {
 		if (game.score > 2 && st == States.SEA) {
 			st = States.SEATOSKY;
 			player.tl.moveTo(game.width/2 - player.width/2, game.height/2 - player.height/2, 50).then(function() {
-				var bird = new Player(bird_player.path, bird_player.width, bird_player.height, 0.5, 0, 0, 6, 8); // increased speed for faster testing
+				var bird = new Player(bird_player.path, bird_player.width, bird_player.height, 0.5, 0, 0, 6, 0.5, 8); // increased speed for faster testing
 				game.rootScene.addChild(bird);
 				bird.tl.moveTo(375,210,15).then(function() {
 					

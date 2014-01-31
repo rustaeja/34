@@ -50,7 +50,7 @@ var fishie_enemy_medium_fish = {
 path: "res/fish_stage/enemies/herring.png",
 height: 159,
 width: 600,
-dir: "vertical",
+dir: "horizontal",
 minScale: 0.05,
 maxScale: 0.4
 }
