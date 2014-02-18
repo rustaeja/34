@@ -3,7 +3,7 @@
  */
  
 var fishie_player_small = {
-							path: "res/fish_stage/enemies/salmon_alevin.png",
+							path: "images/fish_stage/enemies/salmon_alevin.png",
 							height: 157,
 							width: 600,
                             dir: "chase",
@@ -11,7 +11,7 @@ var fishie_player_small = {
 							maxScale: 0.3
 						  }
 var fishie_enemy_medium_fish = {
-							path: "res/fish_stage/enemies/herring.png",
+							path: "images/fish_stage/enemies/herring.png",
 							height: 159,
 							width: 600,
                             dir: "vertical",
@@ -19,7 +19,7 @@ var fishie_enemy_medium_fish = {
 							maxScale: 0.4
 						       }
 var fishie_enemy_seal = {
-							path: "res/fish_stage/enemies/seal.png",
+							path: "images/fish_stage/enemies/seal.png",
 							height: 396,
 							width: 600,
                             dir: "chase",
@@ -27,7 +27,7 @@ var fishie_enemy_seal = {
 							maxScale: 0.8
 						 }
 var fishie_enemy_small = {
-							path: "res/fish_stage/enemies/salmon_fry_animate.png",
+							path: "images/fish_stage/enemies/salmon_fry_animate.png",
 							height: 300,
 							width: 600,
                             dir: "horizontal",

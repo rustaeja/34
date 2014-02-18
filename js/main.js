@@ -53,30 +53,26 @@ window.onload = function() {
 				 fishie_enemy_medium_fish.path,
 				 fishie_enemy_seal.path,
 				 fishie_enemy_small.path,
-				 "res/b1.png", 
-				 "res/b2.png",
-				 "res/sea.jpg", 
-				 "res/sky.jpg",
-				 "res/background.png",
-				 "res/menu.jpg",
-                 "res/fish_stage/fishSkeleton.png",
-                 "res/fish_stage/player/spriteSheet.png",
-                 "res/fish_stage/player/pinkfish.png",
-                 "res/fish_stage/enemies/salmon_alevin.png",
-                 "res/control.png",
-                 "sound/tangent_loop.mp3",
-                 "eagle.png", 
-                 "sound/fishEat.mp3");
+				 "images/b1.png", 
+				 "images/b2.png",
+				 "images/background.png",
+                 "images/menu/controls.png",
+                 "images/menu/menu.jpg",
+                 "images/fish_stage/player.png",
+                 "images/fish_stage/enemies/salmon_alevin.png",
+                 "images/bird_stage/player.png", 
+                 "audio/fish_stage_loop.mp3",
+                 "audio/fish_eaten.mp3");
 
     game.keybind(77, 'musicToggle');    // m
 
-    backgroundMusic = new Audio('sound/tangent_loop.mp3');
+    backgroundMusic = new Audio('audio/fish_stage_loop.mp3');
     backgroundMusic.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
     }, false);
 
-    fishEatMusic = new Audio('sound/fishEat.mp3');
+    fishEatMusic = new Audio('audio/fish_eaten.mp3');
 
     var musicOn = true;
 
@@ -96,13 +92,14 @@ window.onload = function() {
     game.Level = "1 - Sea";
 	var skyController;
 
+
     game.onload = function() {
         var rootScene = game.rootScene,
-            mainBackGround = new Background("res/b1.png", 0, 0, 800, 600),
-            rightBackGround = new Background("res/b1.png", game.width, 0, 800, 600),
+            mainBackGround = new Background("images/b1.png", 0, 0, 800, 600),
+            rightBackGround = new Background("images/b1.png", game.width, 0, 800, 600),
             
-            skyMainBackground = new Background("res/b2.png", 0, -game.height, 800, 600),
-            skyRightBackground = new Background("res/b2.png", game.width, -game.height, 800, 600),
+            skyMainBackground = new Background("images/b2.png", 0, -game.height, 800, 600),
+            skyRightBackground = new Background("images/b2.png", game.width, -game.height, 800, 600),
             
             amountOfTopBackgroundPixelToShow = 100,
             enemyControllerRootScene = new EnemyController(fishie_enemies, rootScene, amountOfTopBackgroundPixelToShow),
@@ -114,7 +111,7 @@ window.onload = function() {
 
         skyController = new SkyController(rootScene, 15);
 
-            player = new Player("res/fish_stage/player/pinkfish.png", 600, 321, game.width/2, game.height/2, 10, 8), // increased speed for faster testing
+        player = new Player("images/fish_stage/player.png", 600, 321, game.width/2, game.height/2, 10, 8), // increased speed for faster testing
 
         backgroundGroup.add(new InfiniteBackground(mainBackGround, rightBackGround));
         backgroundGroup.add(new InfiniteBackground(skyMainBackground, skyRightBackground));
@@ -133,7 +130,7 @@ window.onload = function() {
 
         backgroundMusic.play();
 
-        var menuBackground = new Background("res/menu.jpg", 0, 0);
+        var menuBackground = new Background("images/menu/menu.jpg", 0, 0);
         game.pushScene(new MenuScene(menuBackground, "PLAY"));
 
         // Display labels. Will move all this out. 
@@ -250,7 +247,7 @@ window.onload = function() {
             st = States.SEATOSKY;
             player.tl.moveTo(375, 210, 50).then(function() {
                 bird = new Sprite(70, 83);
-                bird.image = game.assets["eagle.png"];
+                bird.image = game.assets["images/bird_stage/player.png"];
                 game.rootScene.addChild(bird);
                 bird.tl.moveTo(375,210,15).then(function() {
                     game.rootScene.removeChild(player);
@@ -293,7 +290,7 @@ function showControl() {
 
     var game = enchant.Game.instance;
     var control = new Sprite(250, 173);
-    control.image = game.assets["res/control.png"];
+    control.image = game.assets["images/menu/controls.png"];
     control.x = 300;
     control.y = 200;
     game.rootScene.addChild(control);

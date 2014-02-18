@@ -20,7 +20,7 @@ var SkyController = enchant.Class.create(enchant.Entity, {
 
 		if (this.enemies.length === 0) {
 			//Add the first enemy somewhere
-			var first = new SkyEnemy("eagle.png", 70, 83);
+			var first = new SkyEnemy("images/bird_stage/player.png", 70, 83);
 			this.enemies.push(first);
 			this.scene.addChild(first);
 			first.init();
@@ -43,7 +43,7 @@ var SkyController = enchant.Class.create(enchant.Entity, {
 			if (this.enemies[i].isDead) {
 				this.enemies[i].init();
 				if (this.enemies.length < this.enemyNumLimit) {
-					var eagle = new SkyEnemy("eagle.png", 70, 83);
+					var eagle = new SkyEnemy("images/bird_stage/player.png", 70, 83);
 					this.scene.addChild(eagle);
 					eagle.init();
 					this.enemies.push(eagle);
