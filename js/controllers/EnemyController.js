@@ -58,13 +58,13 @@ var EnemyController = enchant.Class.create(enchant.Node, {
 		}
 	},
 
-	removeSea:function() {
+	removeAll: function() {
 		for (var i = 0; i < this.activeEnemies.length; i++) {
 			this.scene.removeChild(this.activeEnemies[i]);
 		}
 	},
 
-	moveDown:function(movementSpeed) {
+	moveDown: function(movementSpeed) {
 		for (var i = 0; i < this.activeEnemies.length; i++) {
 			this.activeEnemies[i].y += movementSpeed;
 		}
