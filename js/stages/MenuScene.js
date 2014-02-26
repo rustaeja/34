@@ -1,23 +1,18 @@
 var MenuScene = enchant.Class.create(enchant.Scene, {
-	initialize:function(background, playLabel) {
-		var game = enchant.Game.instance;
+	initialize: function() {
 		Scene.call(this);
+
+        var menuBackground = new Background(menu_background.path,
+            menu_background.width, menu_background.height);
+
+		this.playButton = new Label();
+
+		playButton.text = PLAY_LABEL;
+		playButton.font = '60px strong';
+		playButton.x = 320;
+		playButton.y = 400;
+
 		this.addChild(background);
-		var label = new Label();
-		
-		label.text = playLabel;
-		label.font = '60px strong';
-		label.x = 320;
-		label.y = 400;
-		this.addChild(label);
-
-		label.addEventListener(enchant.Event.TOUCH_END, function() {
-            game.popScene(this);
-            showControl();
-        });
+		this.addChild(playButton);
 	}
-
-
-    
-
 });

@@ -1,9 +1,9 @@
 // Global Variables
 
 var States = {
-SEA: 0,
-SKY: 1,
-SEATOSKY:2
+    SEA: 0,
+    SKY: 1,
+    SEATOSKY:2
 };
 
 var st = States.SEA;
@@ -13,28 +13,9 @@ var isTransitioning = false;
 enchant();
 
 window.onload = function() {
-	var screenWidth = 800;
-	var screenHeight = 600; 
-
-	var game = new Core(screenWidth, screenHeight);
-
-	game.fps = 30;
+	var game = new GameStateMachine();
 
 	// Set needed file lists in relative/absolute path for attributes of Core
-
-	game.preload(
-		fishie_player.path, 
-		fishie_enemy_medium_fish.path,
-		fishie_enemy_seal.path,
-		fishie_enemy_small.path,
-		b1.path, 
-		b2.path,
-		menu_bckgrd.path,
-		control_instr.path,
-		bckgrd_music.path,
-		bird_player.path,
-		fish_eat_sound.path
-	);
 
 	game.keybind(77, 'musicToggle');    // m
 
@@ -47,10 +28,6 @@ window.onload = function() {
 	fishEatMusic = new Audio(fish_eat_sound.path);
 
 	var musicOn = true;
-
-	game.score = 0;
-	game.Level = "1 - Sea";
-	//var skyController;
 
 	game.onload = function() {
 		var rootScene = game.rootScene,
@@ -89,16 +66,16 @@ window.onload = function() {
 		game.pushScene(new MenuScene(menuBackground, "PLAY"));
 
 		// Display labels. Will move all this out. 
-		rootScene.scoreLabel = new Label("Score: ");
+		rootScene.scoreLabel = new Label(SCORE_LABEL);
 		
-		rootScene.scoreLabel.x = screenWidth / 2;
+		rootScene.scoreLabel.x = SCREEN_WIDTH / 2;
 		rootScene.scoreLabel.y = 5;
 		rootScene.scoreLabel.color = font_color;
 		rootScene.scoreLabel.font = font;
 		rootScene.addChild(rootScene.scoreLabel);
 
-		rootScene.levelLabel = new Label("Level: ");
-		rootScene.levelLabel.text = "Level: " + game.Level;
+		rootScene.levelLabel = new Label(LEVEL_LABEL);
+		rootScene.levelLabel.text = LEVEL_LABEL + game.Level;
 
 		rootScene.levelLabel.x = 10;
 		rootScene.levelLabel.y = 5;
@@ -163,7 +140,7 @@ window.onload = function() {
 						enemy.kill();
 						player.grow();
 						game.score += 1;
-						rootScene.scoreLabel.text = "Score: " + game.score;
+						rootScene.scoreLabel.text = SCORE_LABEL + game.score;
 						fishEatMusic.play();
 					} else {
 						player.kill();
@@ -194,7 +171,7 @@ window.onload = function() {
 						enemy.kill();
 						player.grow();
 						game.score += 1;
-						rootScene.scoreLabel.text = "Score: " + game.score;
+						rootScene.scoreLabel.text = SCORE_LABEL + game.score;
 						fishEatMusic.play();
 					} else {
 						player.kill();
@@ -238,7 +215,7 @@ window.onload = function() {
 				st = States.SKY;
 				backgroundGroup.list[0].backgroundy = 0;
 				enemyController.removeAll();
-				rootScene.levelLabel.text = "Level: 2 - Sky";
+				rootScene.levelLabel.text = LEVEL_2_STRING;
 				showControl();
 				isTransitioning = false;
 				rootScene.enemyController.initialize(bird_enemies, rootScene, 0);
