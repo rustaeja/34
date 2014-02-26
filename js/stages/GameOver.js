@@ -1,12 +1,8 @@
-var LoseState = {
-	SEA: 0,
-	SKY: 1
-};
-
-var GameOver = enchant.Class.create(enchant.Scene, {
-	initialize:function() {
-		var game = enchant.Game.instance;
+var GameOverScene = enchant.Class.create(enchant.Scene, {
+	initialize: function() {
 		Scene.call(this);
+
+		var game = enchant.Game.instance;
 		var background = new Sprite(800, 600);
 		background.image = game.assets["res/fish_stage/fishSkeleton.png"];
 		this.addChild(background);

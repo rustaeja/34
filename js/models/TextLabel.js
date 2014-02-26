@@ -2,9 +2,9 @@ var TextLabel = enchant.Class.create(enchant.Sprite, {
 	initialize: function() { // initialize the class (constructor)
  
      	var scoreLabel = new Label("Score: "), 
-     	    scoreLabel.x = screenWidth / 2,
+     	    scoreLabel.x = SCREEN_WIDTH / 2,
      	    scoreLabel.y = 5, 
-     	    scoreLabel.color = "white";
+     	    scoreLabel.color = SCORE_COLOR;
 
         scoreLabel.addEventListener('enterframe', function() {
             this.text = "Score: " + game.Score;
@@ -13,7 +13,7 @@ var TextLabel = enchant.Class.create(enchant.Sprite, {
         var levelLabel = new Label("Level: "),
             levelLabel.x = 10,
             levelLabel.y = 5,
-            levelLabel.color = "white";
+            levelLabel.color = LEVEL_COLOR; 
 
         levelLabel.addEventListener('enterframe', function() {
             this.text = "Level: " + game.Score;

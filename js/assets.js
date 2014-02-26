@@ -7,16 +7,23 @@ path: "images/b1.png",
     height: 600,
     width: 800,
 }
+
 var b2 = {
     path: "images/b2.png",
     height: 600,
     width: 800,
 }
 
-var menu_bckgrd = {
+var menu_background = {
     path: "images/menu/menu.jpg",
     height: 600,
     width: 800,
+}
+
+var game_background = {
+    path: "images/background.png",
+    height: 3400,
+    width: 2000,
 }
 
 var control_instr = {
@@ -25,14 +32,12 @@ var control_instr = {
     width: 300,
 }
 
-
 /*
  * Fonts
  */
 
 var font_color = "white";
 var font = "20px strong";
-
 
 /*
 * Fishie Stage
@@ -76,7 +81,6 @@ var fishie_enemy_small = {
 
 fishie_enemies = [fishie_enemy_small, fishie_enemy_seal, fishie_enemy_medium_fish];	
 
-
 /*
 * Bird Stage
 */
@@ -91,7 +95,6 @@ var bird_player = {
 }
 
 bird_enemies = [bird_player];
-
 
 /*
 * Noise
