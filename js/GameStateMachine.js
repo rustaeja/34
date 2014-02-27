@@ -22,6 +22,11 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
             fishie_player.path, 
             fishie_enemy_medium_fish.path,
             fishie_enemy_seal.path,
+
+        this.preload(
+            fishie_player.path, 
+            fishie_enemy_medium_fish.path,
+            fishie_enemy_seal.path,
             fishie_enemy_small.path,
             b1.path, 
             b2.path,
