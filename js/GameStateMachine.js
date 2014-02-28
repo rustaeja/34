@@ -13,9 +13,10 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
         // Member variable initialization and definitiion
         this.state = null;
+        this.rootScene = null;
+        this.levelString = null;
         this.fps = FPS;
         this.score = 0;
-        this.levelString = LEVEL_1_STRING;
 
         this.preload(
             fishie_player.path, 
@@ -38,50 +39,53 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
     },
 
     changeState: function(newState) {
+
         switch (this.state) {
 
         case States.MENU:
             initMenuState();
-        break;
+            break;
 
         case States.SEA:
             initSeaState();
-        break;
+            break;
 
         case States.SKY:
             initSkyState();
-        break;
+            break;
 
         case States.GAMEOVER:
             initGameOverState();
-        break;
+            break;
 
         default:
-        break;
+            break;
         }
+
     },
 
     process: function() {
+
         switch (this.state) {
 
         case States.MENU:
             performMenuLogic();
-        break;
+            break;
 
         case States.SEA:
             performSeaLogic();
-        break;
+            break;
 
         case States.SKY:
             performSkyLogic();
-        break;
+            break;
 
         case States.GAMEOVER:
             performGameOverLogic();
-        break;
+            break;
 
         default:
-        break;
+            break;
         }
     },
 
@@ -98,6 +102,8 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
     initSeaState: function () {
         var gameScene = new GameScene();
 
+        this.score = 0;
+        this.levelString = LEVEL_1_STRING;
         this.rootScene = gameScene;
     },
 
@@ -125,4 +131,3 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
     },
 });
-
