@@ -62,7 +62,7 @@ window.onload = function() {
 
 		backgroundMusic.play();
 
-		var menuBackground = new Background(menu_bckgrd.path, 0, 0);
+		var menuBackground = new Background(menu_background.path, 0, 0);
 		game.pushScene(new MenuScene(menuBackground, "PLAY"));
 
 		// Display labels. Will move all this out. 

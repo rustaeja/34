@@ -1,11 +1,11 @@
 var GameStateMachine = enchant.Class.create(enchant.Core, {
 
-    var States = {
+    States: {
         MENU: "menu",
         SEA: "sea",
         SKY: "sky", 
         GAMEOVER: "gameover"
-    }
+    },
 
     initialize: function() {
         // Calls superclass constructer
@@ -31,11 +31,11 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
             bird_player.path,
             fish_eat_sound.path
         );
-    }
+    },
 
     onload: function() {
         changeState(States.MENU);
-    }
+    },
 
     changeState: function(newState) {
         switch (this.state) {
@@ -58,7 +58,8 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
         default:
         break;
-    }
+        }
+    },
 
     process: function() {
         switch (this.state) {
@@ -81,44 +82,47 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
         default:
         break;
-    }
+        }
+    },
 
     initMenuState: function () {
         var menuScene = new MenuScene();
 
         menuScene.playbutton.addEventListener(enchant.Event.TOUCH_END, function() {
             changeState(States.SEA);
+        });
 
         this.rootScene = menuScene;
-    }
+    },
 
     initSeaState: function () {
         var gameScene = new GameScene();
 
         this.rootScene = gameScene;
-    }
+    },
 
     initSkyState: function () {
 
-    }
+    },
 
     initGameOverState: function () {
         this.score = 0;
-    }
+    },
 
     performMenuLogic: function () {
 
-    }
+    },
 
     performSeaLogic: function () {
 
-    }
+    },
 
     performSkyLogic: function () {
 
-    }
+    },
 
     performGameOverLogic: function () {
 
-    }
+    },
+});
 
