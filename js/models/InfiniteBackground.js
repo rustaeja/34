@@ -10,8 +10,7 @@ var InfiniteBackground = enchant.Class.create(enchant.Node, {
 		this.height = backgrounds[0].height;
 	},
 	moveLeft: function(movementSpeed) {
-		var gameInstance = enchant.Game.instance,
-			backgrounds = this.backgrounds;
+	    var backgrounds = this.backgrounds;
 
 		backgrounds[0].x -= movementSpeed;
 		backgrounds[1].x -= movementSpeed;
@@ -24,8 +23,7 @@ var InfiniteBackground = enchant.Class.create(enchant.Node, {
 		}
 	},
 	moveRight: function(movementSpeed) {
-		var gameInstance = enchant.Game.instance,
-			backgrounds = this.backgrounds;
+		var backgrounds = this.backgrounds;
 
 		backgrounds[0].x += movementSpeed;
 		backgrounds[1].x += movementSpeed;
@@ -40,15 +38,24 @@ var InfiniteBackground = enchant.Class.create(enchant.Node, {
 	moveDown: function(movementSpeed) {
 		var backgrounds = this.backgrounds;
 
-		backgrounds[0].y += movementSpeed;
-		backgrounds[1].y += movementSpeed;
-		this.y = backgrounds[0].y;
+        backgrounds[0].y += movementSpeed;
+        backgrounds[1].y += movementSpeed;
+        this.y = backgrounds[0].y;
 	},
 	moveUp: function(movementSpeed) {
 		var backgrounds = this.backgrounds;
 
-		backgrounds[0].y -= movementSpeed;
-		backgrounds[1].y -= movementSpeed;
+        backgrounds[0].y -= movementSpeed;
+        backgrounds[1].y -= movementSpeed;
+        this.y = backgrounds[0].y;
+        
+	},
+    moveToBottom: function() { 
+        var backgrounds = this.backgrounds;
+
+		backgrounds[0].y = BACKGROUND_SEA_BOTTOM_LIMIT;
+		backgrounds[1].y = BACKGROUND_SEA_BOTTOM_LIMIT;
+        
 		this.y = backgrounds[0].y;
-	}
+    }
 });

@@ -22,8 +22,8 @@ var menu_background = {
 
 var game_background = {
     path: "images/background.png",
-    height: 3400,
-    width: 2000,
+    height: 3000,
+    width: 5100,
 }
 
 var control_instr = {
@@ -49,7 +49,8 @@ var fishie_player = {
     width: 600,
     dir: "chase",
     minScale: 0.05,
-    maxScale: 0.4
+    maxScale: 0.4,
+    frames: 8
 }
 
 var fishie_enemy_medium_fish = {

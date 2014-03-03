@@ -1,26 +1,32 @@
 var Player = enchant.Class.create(enchant.Sprite, {
-	initialize: function(spritePath, spriteWidth, spriteHeight, scale, posX, posY, movementSpeed, gravity, frameCount) {
-		var gameInstance = enchant.Game.instance;
+	initialize: function(spritePath, spriteWidth, spriteHeight, 
+                    posX, posY) {
 
 		Sprite.call(this, spriteWidth, spriteHeight);
+		this.image = enchant.Core.instance.assets[spritePath];
+
         this.originX = this.width/2;
         this.originY = this.height/2;
-		this.image = gameInstance.assets[spritePath];
-		this.movementSpeed = movementSpeed;
-		this.frameCount = frameCount;
+
 		this.x = posX - this.originX;
 		this.y = posY - this.originY;
-		this.gravity = gravity;
-        this.scale(scale, scale);
+
+		this.movementSpeed = PLAYER_SEA_MOVEMENTSPEED;
+		this.gravity = 0;
+        this.scale(PLAYER_SEA_SCALE, PLAYER_SEA_SCALE);
 	},
 
+    setGravity: function(gravity) {
+        this.gravity = gravity;
+    },
+
+    setAnimationFrames: function(frames) {
+		this.frames = frames;
+    },
 
 	onenterframe: function() {
         framesToWait = 3;
-		this.frame = Math.floor(this.age / framesToWait) % this.frameCount;
-		if (this.y + this.gravity + this.height*this.scaleX < enchant.Game.instance.height) {
-			this.y = this.y + this.gravity;
-		}
+		this.frame = Math.floor(this.age / framesToWait) % this.frames;
 	},
 
 	look: function(direction) {
@@ -41,7 +47,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
 	},
 
     kill: function() {
-        window.alert("Game Over");
+        print("Game Over");
     },
 
     getScaledX: function() {

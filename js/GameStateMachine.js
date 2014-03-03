@@ -1,11 +1,12 @@
-var GameStateMachine = enchant.Class.create(enchant.Core, {
 
-    States: {
-        MENU: "menu",
-        SEA: "sea",
-        SKY: "sky", 
-        GAMEOVER: "gameover"
-    },
+var States = {
+    MENU: "menu",
+    SEA: "sea",
+    SKY: "sky", 
+    GAMEOVER: "gameover"
+};
+
+var GameStateMachine = enchant.Class.create(enchant.Core, {
 
     initialize: function() {
         // Calls superclass constructer
@@ -13,8 +14,9 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
         // Member variable initialization and definitiion
         this.state = null;
-        this.rootScene = null;
         this.levelString = null;
+        this.sceneController = null;
+        this.enemyFactory = null;
         this.fps = FPS;
         this.score = 0;
 
@@ -35,27 +37,29 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
     },
 
     onload: function() {
-        changeState(States.MENU);
+        this.changeState(States.MENU);
     },
 
     changeState: function(newState) {
+        this.popScene();
+        this.state = newState;
 
-        switch (this.state) {
+        switch (newState) {
 
         case States.MENU:
-            initMenuState();
+            this.initMenuState();
             break;
 
         case States.SEA:
-            initSeaState();
+            this.initSeaState();
             break;
 
         case States.SKY:
-            initSkyState();
+            this.initSkyState();
             break;
 
         case States.GAMEOVER:
-            initGameOverState();
+            this.initGameOverState();
             break;
 
         default:
@@ -64,24 +68,25 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
 
     },
 
-    process: function() {
+    onenterframe: function() {
+        this.performGeneralLogic();
 
         switch (this.state) {
 
         case States.MENU:
-            performMenuLogic();
+            this.performMenuLogic();
             break;
 
         case States.SEA:
-            performSeaLogic();
+            this.performSeaLogic();
             break;
 
         case States.SKY:
-            performSkyLogic();
+            this.performSkyLogic();
             break;
 
         case States.GAMEOVER:
-            performGameOverLogic();
+            this.performGameOverLogic();
             break;
 
         default:
@@ -89,45 +94,51 @@ var GameStateMachine = enchant.Class.create(enchant.Core, {
         }
     },
 
-    initMenuState: function () {
+    initMenuState: function() {
         var menuScene = new MenuScene();
-
-        menuScene.playbutton.addEventListener(enchant.Event.TOUCH_END, function() {
-            changeState(States.SEA);
-        });
-
-        this.rootScene = menuScene;
+        this.sceneController = new MenuController(this, menuScene);
+        
+        this.pushScene(menuScene);
     },
 
-    initSeaState: function () {
+    initSeaState: function() {
         var gameScene = new GameScene();
+        gameScene.initSeaStage();
+        this.controller = new SeaController(this, gameScene); 
 
         this.score = 0;
         this.levelString = LEVEL_1_STRING;
-        this.rootScene = gameScene;
+
+        this.pushScene(gameScene);
     },
 
-    initSkyState: function () {
+    initSkyState: function() {
 
     },
 
-    initGameOverState: function () {
+    initGameOverState: function() {
         this.score = 0;
     },
 
-    performMenuLogic: function () {
+    performGeneralLogic: function() {
 
     },
 
-    performSeaLogic: function () {
+
+    performMenuLogic: function() {
 
     },
 
-    performSkyLogic: function () {
+    performSeaLogic: function() {
+        this.controller.performInputLogic();
+        this.controller.performFrameLogic();
+    },
+
+    performSkyLogic: function() {
 
     },
 
-    performGameOverLogic: function () {
+    performGameOverLogic: function() {
 
     },
-});
+})

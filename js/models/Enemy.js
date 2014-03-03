@@ -1,22 +1,24 @@
 var Enemy = enchant.Class.create(enchant.Sprite, {
-	initialize:function(enemyMetaData, scene, callback) {
+	initialize:function(enemyMetaData) {
+		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
 		var game = enchant.Game.instance;
 
-		Sprite.call(this, enemyMetaData.width, enemyMetaData.height);
 		this.image = game.assets[enemyMetaData.path];
-		this.frameCount = 0;
         this.width = enemyMetaData.width;
         this.height = enemyMetaData.height;
+        this.originX = this.width/2;
+        this.originY = this.height/2;
+        this.setRandomSize(enemyMetaData.minScale, enemyMetaData.maxScale);
+
+        this.dir = enemyMetaData.dir;
 		this.dx = 0;
 		this.dy = 0;
-        this.dir = enemyMetaData.dir;
-		this.dead = false; // false
-		this.scene = scene;
-        this.callback = callback;		
-        this.randomizeSize(enemyMetaData.minScale, enemyMetaData.maxScale);
+
+		this.isDead = false;
+		this.frameCount = 0;
 	},
 
-	randomizeSize:function(minScale, maxScale) {
+	setRandomSize:function(minScale, maxScale) {
 		var randomScale = (Math.random() * (maxScale - minScale)) + minScale;
 		this.scale(randomScale, randomScale);
 	},
@@ -39,8 +41,8 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 				var xDif = this.scene.player.getScaledX() - this.x;
 				var yDif = this.scene.player.getScaledY() - this.y;
 				// too far, don't chase
-				if (Math.abs(xDif) > game.width || 
-					Math.abs(yDif) > game.height ||
+				if (Math.abs(xDif) > SCREEN_WIDTH || 
+					Math.abs(yDif) > SCREEN_HEIGHT ||
 					Math.abs(this.scaleX) <= Math.abs(this.scene.player.scaleX)) {
 					var randomSpeed2 = Math.floor(Math.random()*6 - 3);
 					this.x += randomSpeed;
@@ -74,44 +76,26 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 		if (this.y < topLimit) {
 			this.y = topLimit;
 		}
+	},
 
-		if (this.x > (game.width + game.width) || this.x < -game.width) {
-            this.kill();
-		} else if (this.y > (game.height + 100)) {
-            this.kill();
-		}
+	moveLeft: function(movementSpeed) {
+        this.x -= movementSpeed;
+	},
+	moveRight: function(movementSpeed) {
+        this.x += movementSpeed;
+	},
+	moveDown: function(movementSpeed) {
+        this.y += movementSpeed;
+	},
+	moveUp: function(movementSpeed) {
+        this.y -= movementSpeed;
 	},
 
     kill:function() {
-        this.dead = true;
-        this.callback(this);
+        this.isDead = true;
     },
 
-	randomizePosition:function(topLimit) {
-		var game = enchant.Game.instance;
-        
-        if (this.dir === "vertical") {
-            var random = Math.floor(Math.random() * game.width);
-            this.x = random;
-            this.y = game.height;	// don't spawn from the top
-        } 
-        else {
-            var random = Math.floor(Math.random() * (game.height - topLimit));
-            this.y = random + topLimit;
-			
-			// Randomize Left or Right to enter from
-			var randomEnter = Math.floor(Math.random()*2);
-
-            if (randomEnter === 0) {
-                // Enemy spawn from left
-				this.scaleX = -this.scaleX;
-                this.x = -game.width/2; // idk why this works, should be whats below
-				//-(this.width * Math.abs(this.scaleX));
-            } 
-            else {
-                // Enemy spawn from right
-                this.x = game.width;
-            }
-        }
-	}
+    isOffScreen: function() {
+        return (this.x > 2 * SCREEN_WIDTH || this.x < -SCREEN_WIDTH)
+    }
 });
