@@ -1,7 +1,6 @@
 /* 
 * Background
 */
-
 var b1 = {
 path: "images/b1.png",
     height: 600,
@@ -32,7 +31,6 @@ var control_instr = {
 
 var font_color = "white";
 var font = "20px strong";
-
 
 /*
 * Fishie Stage
