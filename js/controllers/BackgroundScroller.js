@@ -2,12 +2,10 @@ var states = {
 	SEA: 0,
 	SKY: 1
 };
-
 var isTransitioning = false;
 var backgroundTransitionSpeed = 3;
 var backgroundScrollSpeed = 2;
 var currentState = states.SEA;
-
 var SeaBackground = enchant.Class.create(enchant.Sprite, {
 	initialize:function() {
 		// Load the sea image from asset
@@ -80,5 +78,4 @@ function initSeaBackground(rootScene) {
 	background2.x = 800;
 	background2.scaleX = -1;
 	rootScene.addChild(background2);
-	
 }
